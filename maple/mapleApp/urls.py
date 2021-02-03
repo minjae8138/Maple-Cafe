@@ -23,7 +23,8 @@ urlpatterns = [
 
 
 #----------------------< 김민재 >----------------------#
-
+    path('korder/',views.korder,name="korder/"),
+    path('menuProduct/',views.menuProduct,name="menuProduct/"),
 #----------------------< 심영석 >----------------------#
 
 #----------------------< 박우환 >----------------------#

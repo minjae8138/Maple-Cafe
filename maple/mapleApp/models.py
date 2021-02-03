@@ -10,8 +10,12 @@ class SampleProduct(models.Model):
 
 
 
-#----------------------< 김민재 >----------------------
 
+#----------------------< 김민재 >----------------------
+class mapleProduct(models.Model) :
+    mp_name = models.CharField(max_length=100)
+    mp_price = models.IntegerField(default=0)
+    mp_count = models.IntegerField(default=0)
 #----------------------< 심영석 >----------------------
 
 #----------------------< 박우환 >----------------------

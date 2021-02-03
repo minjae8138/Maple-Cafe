@@ -14,8 +14,10 @@ def index(request):
     return render(request,'index.html')
 
 # order
+# def order(request):
+#     return render(request,'order.html')
 def order(request):
-    return render(request,'order.html')
+    return redirect('menuProduct')
 
 # orderStatus
 def orderStatus(request):
@@ -36,7 +38,14 @@ def salesStatus(request):
 
 
 #----------------------< 김민재 >----------------------#
+def korder(request) :
+    return render(request, korder.html)
 
+def menuProduct(request) :
+    table = mapleProduct.objects.all()
+    context = {'table': table}
+    print(type(table),table)
+    return render(request, 'order.html', context)
 
 #----------------------< 심영석 >----------------------#
 
@@ -74,7 +83,7 @@ def serchProduct(request):
     producs = SampleProduct.objects.all()
     # title  writer  content  regdata  viewcnt
     #print('*>producs -', type(producs), producs)
-    context = {'producs': producs,}
+    context = {'producs': producs}
     
     return render(request, 'sample_crud.html', context)
 

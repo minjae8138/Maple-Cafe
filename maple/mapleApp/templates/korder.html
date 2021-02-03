@@ -115,7 +115,7 @@
 
               <br>
 
-{% if table %}
+
     <!--  MAPLE: 테이블  START  -->
               <div class="container d-flex justify-content-center mt-50 mb-50">
                 <div class="card w-100">
@@ -138,26 +138,46 @@
 
 
 
-{% for tab in  table %}
+
 
 
                       <tbody>
                         <tr>
-                          111111111111111
-                          <td>111111111</td>
                           <td> <input  type="radio" name="radioValue" value="{{produc.id}}"> </td>
-                          <td id="pId_{{table.id}}">{{table.id}}</td>
-                          <td id="pName_{{table.id}}" >{{table.mp_name}}</td>
-                          <td id="pPrice_{{table.id}}">{{table.mp_price}}</td>
-                          <td class="pValue" id="pValue_{{table.id}}">0</td>
-                          <td id="pCount_{{table.id}}>
+                          <td id="pId_1">1</td>
+                          <td id="pName_1" >아이스커피</td>
+                          <td id="pPrice_1">5100</td>
+                          <td class="pValue" id="pValue_1">0</td>
+                          <td id="pCount_1">
                               <button type="button" onclick="calCount1('p')">+</button>
-                              <input class="pCountInput" id="pCountInput_{{table.id}}" type="text" name="pop_out" value="0" readonly="readonly"/>
-                              <button type="button" onclick="calCount{{table.id}}('m')">-</button>
+                              <input class="pCountInput" id="pCountInput_1" type="text" name="pop_out" value="0" readonly="readonly"/>
+                              <button type="button" onclick="calCount1('m')">-</button>
                           </td>
                         </tr>
-
-{% endfor %}
+                        <tr>
+                          <td> <input  type="radio" name="radioValue" value="{{produc.id}}"> </td>
+                          <td id="pId_2">2</td>
+                          <td id="pName_2" >프라푸치노</td>
+                          <td id="pPrice_2">6100</td>
+                          <td class="pValue" id="pValue_2" >0</td>
+                          <td id="pCount_2">
+                              <button type="button" onclick="calCount2('p')">+</button>
+                              <input class="pCountInput" id="pCountInput_2" type="text" name="pop_out" value="0" readonly="readonly"/>
+                              <button type="button" onclick="calCount2('m')">-</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td> <input  type="radio" name="radioValue" value="{{produc.id}}"> </td>
+                          <td id="pId_3">3</td>
+                          <td id="pName_3" >아이스티</td>
+                          <td id="pPrice_3">5200</td>
+                          <td class="pValue" id="pValue_3" >0</td>
+                          <td id="pCount_3">
+                              <button type="button" onclick="calCount3('p')">+</button>
+                              <input class="pCountInput" id="pCountInput_3" type="text" name="pop_out" value="0" readonly="readonly"/>
+                              <button type="button" onclick="calCount3('m')">-</button>
+                          </td>
+                        </tr>
 
 
 
@@ -169,9 +189,6 @@
               </div>
     <!--  MAPLE: 테이블  END -->
 
- {% else %}
-       <p>  데이터가 존재하지 않습니다. </p>
- {% endif %}
 
 <!--  MAPLE: BUTTON  2 -->
               <br>
