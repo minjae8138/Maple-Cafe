@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+    <style>
+       .whole{
+           padding-left: 470px;
+           padding-top: 100px;
+       }
+
+        .container{
+            width: 500px;
+            border: 2px solid rgba(184, 180, 180, 0.877);
+            padding: 5px;
+        }
+
+
+        #table-body{
+            text-align: center;
+        }
+        .amount{
+            border-top: 1px solid rgba(184, 180, 180, 0.877) ;
+            color:red;
+            font-weight: bold;
+            padding-left: 200px;
+        }
+
+        .btn-box{
+            padding-left: 400px;
+        }
+        .select-btn{
+            margin-left: 430px;
+            background-color: royalblue;
+            color: white;
+            font-size: 15px;
+        }
+        .delete-btn{
+            background-color: royalblue;
+            color: white;
+            font-size: 15px;
+        }
+        .complete-btn{
+            background-color: royalblue;
+            color: white;
+            font-size: 15px;
+        }
+    </style>
+
+    
+</head>
+<body>
+    <div class="whole">
+    <h3>주문</h3>
+    <form >
+        <button class="menu-btn">메뉴</button>
+        <select class="menu" name="menu">
+            <option id="menu-box" value="">--- Choose menu ---</option>
+            <option id="menu-box" value="아이스티">아이스커피</option>
+            <option id="menu-box" value="아메리카노">프라푸치노</option>
+            <option id="menu-box" value="딸기라떼">아이스티</option>
+            <option id="menu-box" value="초코 프라푸치노">카페모카</option>
+            <option id="menu-box" value="에스프레소">라떼</option>
+            <option id="menu-box" value="유자차">아메리카노</option>
+        </select>
+        <br>
+        <button class="price-btn">가격</button>
+        <input class="price" type="text" placeholder="">
+        <br>
+        <button class="count-btn">수량</button>
+        <input class="count" type="text" placeholder="">
+    </form>
+    <br>
+    <button class="select-btn">선택</button>
+    <br>
+    <br>
+    <div class="container">
+        <table class="list-table">
+            <colgroup>
+                <col width="5%">
+                <col width="45%">
+                <col width="15%">
+                <col width="10%">
+                <col width="25%">
+            </colgroup>
+            <thead id="table-head">
+                <tr>
+                    <th>check</th>
+                    <th>메뉴</th>
+                    <th>가격</th>
+                    <th>수량</th>
+                    <th>금액</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr >
+                </tr>
+            </tbody>
+            
+        </table>
+        <br>
+        <div class="amount">
+            <span>합계</span>
+            <span id="amount">0</span>
+        </div>
+    </div>
+    <br>
+    <div class="btn-box">
+    <button class="delete-btn">삭제</button>
+    <button class="complete-btn">완료</button>
+    </div>
+    <script >
+        const menu = document.querySelector(".menu")
+        const price = document.querySelector(".price")
+        const count = document.querySelector(".count")
+        const select = document.querySelector(".select-btn")
+        const tableBody = document.querySelector("#table-body")
+        const del = document.querySelector(".delete-btn")
+
+        let a = 5100;
+        let b = 6100;
+        let c = 5200;
+        let d = 5500;
+        let e = 6100;
+        let f = 4100;
+
+        function aa(event) {
+            if (menu.value === "아이스커피") {
+                price.value = a + "원"
+            } else if (menu.value === "프라푸치노") {
+                price.value = b + "원"
+            } else if (menu.value === "아이스티") {
+                price.value = c + "원"
+            } else if (menu.value === "카페모카") {
+                price.value = d + "원"
+            } else if (menu.value === "라떼") {
+                price.value = e + "원"
+            } else if (menu.value === "아메리카노") {
+                price.value = f + "원"
+            }
+        }
+
+        let sum = 0
+        function paintAdd() {
+            const tr = document.createElement('tr');
+            const input = document.createElement('input')
+            input.setAttribute('type', 'checkbox')
+            input.setAttribute('class', 'btn-chk')
+
+            const td00 = document.createElement('td');
+            td00.appendChild(input);
+            tr.appendChild(td00);
+
+
+            const td01 = document.createElement('td');
+            td01.innerText = menu.value
+            tr.appendChild(td01);
+
+
+            const td02 = document.createElement('td');
+            td02.innerText = price.value
+            tr.appendChild(td02);
+
+
+            const td03 = document.createElement('td');
+            td03.innerText = count.value
+            tr.appendChild(td03);
+
+
+            const td04 = document.createElement('td');
+
+            td04.innerText = parseInt(price.value) * parseInt(count.value)
+            td04.setAttribute("value", parseInt(price.value) * parseInt(count.value))
+            tr.appendChild(td04);
+            tableBody.appendChild(tr);
+
+            sum += parseInt(td04.innerText)
+            document.getElementById("amount").innerText = sum
+        }
+
+        function paintDeleteSel(event) {
+
+            var chkbox = document.querySelectorAll('#table-body .btn-chk');
+
+            for (var i in chkbox) {
+                if (chkbox[i].checked == true) {
+
+                    sum -= chkbox[i].parentNode.parentNode.lastChild.innerText
+                    document.getElementById("amount").innerText = sum
+                    tableBody.removeChild(chkbox[i].parentNode.parentNode);
+
+
+
+                }
+            }
+
+        }
+
+
+        menu.addEventListener("change", aa)
+        select.addEventListener("click", paintAdd)
+        del.addEventListener("click", paintDeleteSel)
+
+
+    </script>
+    </div>
+</body>
+
+</html>
