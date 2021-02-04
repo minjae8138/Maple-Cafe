@@ -38,7 +38,7 @@ def salesStatus(request):
 
 
 #----------------------< 김민재 >----------------------#
-def korder(request) :
+def kkorder(request) :
     return render(request, korder.html)
 
 def menuProduct(request) :
@@ -81,6 +81,7 @@ def sampleCrud(request):
 def serchProduct(request):
     print('*> serchProduct :')
     producs = SampleProduct.objects.all()
+    print('111111111111111',producs)
     # title  writer  content  regdata  viewcnt
     #print('*>producs -', type(producs), producs)
     context = {'producs': producs}
@@ -92,8 +93,8 @@ def insertProduct(request):
     print('*> insertProduct :')
     
     # Client 값 확인
-    pdName=request.POST.get('pdName', '0')
-    pdPrice=request.POST.get('pdPrice', 0)
+    pdName=request.POST.get('pdName', 1)
+    pdPrice=request.POST.get('pdPrice', 2)
 
     # 데이터 저장
     pro=SampleProduct(pd_name = pdName,pd_price = pdPrice)
