@@ -17,8 +17,8 @@ def index(request):
 # def order(request):
 #     return render(request,'order.html')
 def order(request):
-    return redirect('menuProduct')
-
+    # return redirect('menuProduct')
+    return render(request, 'order.html')
 # orderStatus
 def orderStatus(request):
     return render(request,'orderStatus.html')
