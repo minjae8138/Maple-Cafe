@@ -5,6 +5,7 @@ from django.utils import timezone
 
 #----------------------< 공통 >----------------------
 class SampleProduct(models.Model):
+
     pd_name = models.CharField(max_length=100)
     pd_price = models.IntegerField(default=0)
 
@@ -13,6 +14,7 @@ class SampleProduct(models.Model):
 
 #----------------------< 김민재 >----------------------
 class mapleProduct(models.Model) :
+    mp_number = models.IntegerField(default=0)
     mp_name = models.CharField(max_length=100)
     mp_price = models.IntegerField(default=0)
     mp_count = models.IntegerField(default=0)

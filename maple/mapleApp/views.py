@@ -81,9 +81,9 @@ def sampleCrud(request):
 def serchProduct(request):
     print('*> serchProduct :')
     producs = SampleProduct.objects.all()
-    print('111111111111111',producs)
+    print('producs',producs)
     # title  writer  content  regdata  viewcnt
-    #print('*>producs -', type(producs), producs)
+    # print('*>producs -', type(producs), producs)
     context = {'producs': producs}
     
     return render(request, 'sample_crud.html', context)
@@ -93,8 +93,8 @@ def insertProduct(request):
     print('*> insertProduct :')
     
     # Client 값 확인
-    pdName=request.POST.get('pdName', 1)
-    pdPrice=request.POST.get('pdPrice', 2)
+    pdName=request.POST.get('pdName', '0')
+    pdPrice=request.POST.get('pdPrice', 0)
 
     # 데이터 저장
     pro=SampleProduct(pd_name = pdName,pd_price = pdPrice)
@@ -109,14 +109,14 @@ def updateProduct(request):
 
     #id = request.POST['id']
 
-    id = request.POST.get('id', 0)
+    pID = request.POST.get('pID', 0)
     pdName=request.POST.get('pdName', '0')
     pdPrice=request.POST.get('pdPrice', 0 )
 
-    print('request modify - ', id, pdName, pdPrice)
+    print('request modify - ', pID, pdName, pdPrice)
 
     # 데이터 수정
-    pro = SampleProduct.objects.get(id=id)
+    pro = SampleProduct.objects.get(id=pID)
     pro.pd_name = pdName
     pro.pd_price = pdPrice
     pro.save()
@@ -130,10 +130,10 @@ def updateProduct(request):
 def deleteProduct(request):
     print('*> deleteProduct :')
     # Client 값 확인
-    id = request.POST.get('id',0)
-    print('request bbs_remove param - ' , id)
+    pID = request.POST.get('pID',0)
+    print('request bbs_remove param - ' , pID)
     # 데이터 수정
-    SampleProduct.objects.get(id=id).delete()
+    SampleProduct.objects.get(id=pID).delete()
     #화면이동
     return redirect('serchProduct')
 

@@ -1,3 +1,27 @@
+sample_crud.html
+
+d
+m
+녕
+
+유형
+HTML
+크기
+13KB (13,300바이트)
+사용한 저장용량
+13KB (13,300바이트)
+위치
+templates
+소유자
+Rean Rean
+수정한 날짜
+2021. 2. 4., Rean Rean
+열어본 날짜
+내가 오후 2:11에 열어봄
+생성한 날짜
+2021. 2. 4.
+설명 추가
+뷰어가 다운로드할 수 있음
 <!-- *************************** MAPLE : 공통 (HEADER) START  ******************  -->
 
 <!DOCTYPE html>
@@ -136,6 +160,7 @@
                           <td id="pId_{{produc.id}}">{{produc.id}}</td>
                           <td id="pName_{{produc.id}}" >{{produc.pd_name}}</td>
                           <td id="pPrice_{{produc.id}}">{{produc.pd_price}}</td>
+
                         </tr>
 {%    endfor    %}
 
@@ -194,15 +219,15 @@
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ✔ 상품명 </label>
                               <input type="text" readonly="readonly"
-                                id='pdName' class="form-control" placeholder="">
+                                id='pdName' name='pdName' class="form-control" placeholder="">
                           </div>
 
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ✔ 가격 </label>
                               <input type="text"  readonly="readonly"
-                                id='pdPrice' class="form-control" placeholder="">
+                                id='pdPrice' name='pdPrice' class="form-control" placeholder="">
                           </div>
-
+                          <input type="hidden" name="pID" id="pID"  value="">
                           <!--   업데이트 구분 : ( Y: 수정 , N:신규        -->
                           <input type="hidden" name="updateYn" id="updateYn"  value="N">
 
@@ -290,8 +315,7 @@
              var checkbox = $("[name=radioValue]:checked");
 			 var ckVal= checkbox.val()
              //alert( $('#pName_'+ckVal).text() )
-             console.log(checkbox)
-             console.log(ckVal)
+
              // 선택된 버튼이 없으면 메세지
              if (ckVal == null){
                  alert('! 수정할 항목을 선택해 주세요. ')
@@ -303,7 +327,8 @@
                  $('#pdName').val( $('#pName_'+ckVal).text()  ) ;
                  $('#pdPrice').val( $('#pPrice_'+ckVal).text()  );
                  $('#id').val( ckVal  );
-                 // 업데이트 구분을 Y로 변경 "
+                 $('#pID').val( ckVal  );
+                 // 업데이트 구분을 Y로 변경 "id
                  $('#updateYn').val( "Y" );
 
              }
@@ -318,7 +343,6 @@
              var updateYn =$('#updateYn').val()
 
              // 수정구분이 'Y' : 수정
-             //alert(updateYn)
              if (updateYn == 'Y'){
                  $('#regForm').attr('action' , "{% url 'updateProduct' %}")
                  $('#regForm').submit() ;
@@ -342,16 +366,12 @@
              if (ckVal == null){
                  alert('! 삭제할 항목을 선택해 주세요.  ')
              }else{
+                 $('#pID').val( ckVal  );
                  $('#regForm').attr('action' , "{% url 'deleteProduct' %}")
                  $('#regForm').submit() ;
 
              }
 		 })
-
-
-
-
-
 
 
 	})

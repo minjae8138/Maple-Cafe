@@ -99,7 +99,7 @@
 
   <section class="page-section about-heading">
     <div class="container">
-      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/about.jpg" alt="">
+      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">
       <div class="about-heading-content">
         <div class="row">
           <div class="col-xl-9 col-lg-10 mx-auto">
@@ -381,25 +381,9 @@
             }
        }
 
-<!--        function calCount2(type){-->
-<!--        let pCountInput_2 = document.querySelector("#pCountInput_2");-->
-<!--        let currentValue_2 = parseInt(pCountInput_2.value)-->
-<!--        let pValue_2 = document.querySelector("#pValue_2")-->
-<!--        if(type==='p'){-->
-<!--            currentValue_2 += 1;-->
-<!--            pCountInput_2.value= currentValue_2;-->
-<!--            pValue_2.innerText = currentValue_2;-->
-
-<!--        }else{-->
-<!--            currentValue_2 -= 1;-->
-<!--            pCountInput_2.value= currentValue_2;-->
-<!--            pValue_2.innerText = currentValue_2;-->
-<!--            }-->
-<!--       }-->
-
-
 <!-- ******************버튼 기능************************   -->
 
+    // ---------------------------입력----------------------------------
     var sum = 0
     $('#inputBtn2').click(function(){
         var checkbox = $("[name=radioValue]:checked");
@@ -446,24 +430,10 @@
             sum += amount
 
             $('#amount').text(sum)
-
-
-<!--            let pValue_1 = document.querySelector("#pValueInput_1")-->
-<!--            let pValue_2 = document.querySelector("#pValueInput_2")-->
-<!--            let pValue_3 = document.querySelector("#pValueInput_3")-->
-<!--            if(('pValue_'+ckVal)=='pValue_1'){-->
-<!--                pValue_1.value = 0-->
-<!--            }else if(('pValue_'+ckVal)=='pValue_2'){-->
-<!--                pValue_2.value = 0-->
-<!--            }else if(('pValue_'+ckVal)=='pValue_3'){-->
-<!--                pValue_3.value = 0-->
-<!--            }-->
-
-
-
        }
     });
 
+    // -------------------------삭제---------------------------------------
     $('#delBtn2').click(function(){
         var $obj = $("input[class='btn-chk']")
 
@@ -480,9 +450,22 @@
                 $obj.eq(i).parent().parent().remove();
                    }
             }
-
-
         })
+
+    // -------------------------저장-----------------------------------
+    $('#saveBtn3').click(function(){
+         var updateYn =$('#updateYn').val()
+
+         // 수정구분이 'Y' : 수정
+         if (updateYn == 'Y'){
+             $('#regForm').attr('action' , "{% url 'updateProduct' %}")
+             $('#regForm').submit() ;
+         // 수정구분이 'N' : 입력
+         }else{
+             $('#regForm').attr('action' , "{% url 'insertProduct' %}")
+             $('#regForm').submit() ;
+         }
+     })
 
 
 
