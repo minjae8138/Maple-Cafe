@@ -8,6 +8,7 @@ from .models import *
 
 #----------------------< 공통 >----------------------
 admin.site.register(SampleProduct)
+admin.site.register(mapleProduct)
 
 #----------------------< 김민재 >----------------------
 
