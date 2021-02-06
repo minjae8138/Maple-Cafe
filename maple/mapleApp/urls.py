@@ -23,8 +23,8 @@ urlpatterns = [
 
 
 #----------------------< 김민재 >----------------------#
-    path('kkorder/',views.kkorder,name="kkorder"),
-    path('menuProduct/',views.menuProduct,name="menuProduct/"),
+    path('serchorder/'    , views.serchorder      ,name='serchorder'),
+
 #----------------------< 심영석 >----------------------#
 
 #----------------------< 박우환 >----------------------#
@@ -32,7 +32,10 @@ urlpatterns = [
 #----------------------< 오은영 >----------------------#
 
 #----------------------< 정연욱 >----------------------#
-
+    path('serchmenu/'    , views.serchmenu      ,name='serchmenu'),
+    path('insertmenu/'    , views.insertmenu      ,name='insertmenu'),
+    path('deletemenu/'    , views.deletemenu      ,name='deletemenu'),
+    path('updatemenu/'    , views.updatemenu      ,name='updatemenu'),
 #----------------------< 최유숙 >----------------------#
 
 

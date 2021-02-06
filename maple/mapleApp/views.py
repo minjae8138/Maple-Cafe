@@ -1,10 +1,12 @@
+
+
+
 from django.http import JsonResponse
 from django.shortcuts import render , redirect
-
-from .models import *
-
+from django.contrib.auth.models import User
+from django.contrib import auth
 from django.core.paginator import *
-
+from .models import *
 
 
 #----------------------< 공통 : 메뉴이동>--------------------#
@@ -16,16 +18,14 @@ def index(request):
 # order
 # def order(request):
 #     return render(request,'order.html')
-def order(request):
-    # return redirect('menuProduct')
-    return render(request, 'order.html')
+
 # orderStatus
 def orderStatus(request):
     return render(request,'orderStatus.html')
 
 # menu
-def menu(request):
-    return render(request,'menu.html')
+# def menu(request):
+#     return render(request,'menu.html')
 
 # staff
 def staff(request):
@@ -38,17 +38,23 @@ def salesStatus(request):
 
 
 #----------------------< 김민재 >----------------------#
-def kkorder(request) :
-    return render(request, korder.html)
+def order(request):
+    # return redirect('menuProduct')
+    return redirect('serchorder')
 
-def menuProduct(request) :
-    table = mapleProduct.objects.all()
-    context = {'table': table}
-    print(type(table),table)
+def serchorder(request):
+    print('*> serchmenu :')
+    menus = Menu.objects.all()
+    print('menus', menus)
+    # title  writer  content  regdata  viewcnt
+    # print('*>producs -', type(producs), producs)
+    context = {'menus': menus}
+
+
     return render(request, 'order.html', context)
 
-#----------------------< 심영석 >----------------------#
 
+#----------------------< 심영석 >----------------------#
 
 #----------------------< 박우환 >----------------------#
 
@@ -57,12 +63,73 @@ def menuProduct(request) :
 
 
 #----------------------< 정연욱 >----------------------#
+# order page 실험
+def menu(request):
+    return redirect('serchmenu')
+
+
+def serchmenu(request):
+    print('*> serchmenu :')
+    menus = Menu.objects.all()
+    print('menus', menus)
+    # title  writer  content  regdata  viewcnt
+    # print('*>producs -', type(producs), producs)
+    context = {'menus': menus}
+
+
+    return render(request, 'menu.html', context)
+
+
+# 샘플CRUD - 입력
+def insertmenu(request):
+    print('*> insertmenu :')
+
+    # Client 값 확인
+    menuId = request.POST.get('menuId','0')
+    menuName = request.POST.get('menuName', '0')
+    menuPrice = request.POST.get('menuPrice',0)
+
+
+    # 데이터 저장
+    pro = Menu(menuid=menuId, menuname=menuName, price=menuPrice)
+    pro.save()
+
+    return redirect('serchmenu')
+# 샘플CRUD - 수정
+def updatemenu(request):
+    print('*> updateProduct :')
+    # Client 값 확인
+
+    #id = request.POST['id']
+
+    menuId = request.POST.get('mId', 0)
+    menuName=request.POST.get('menuName', '0')
+    menuPrice=request.POST.get('price', 0 )
+
+    print('request modify - ', menuId, menuName, menuPrice)
+
+    # 데이터 수정
+    pro = Menu.objects.get(menuid=menuId)
+    pro.menuname = menuName
+    pro.price = menuPrice
+    pro.save()
+    return redirect('serchmenu')
+
+# 샘플CRUD - 삭제
+def deletemenu(request):
+    print('*> deleteProduct :')
+    # Client 값 확인
+    mID = request.POST.get('mID','0')
+    print('request bbs_remove param - ' , mID)
+    # 데이터 수정
+    Menu.objects.get(menuid=mID).delete()
+    #화면이동
+    return redirect('serchmenu')
+
+
+
 
 #----------------------< 최유숙 >----------------------#
-
-
-
-
 
 
 #----------------------< sample >----------------------#
@@ -94,7 +161,7 @@ def insertProduct(request):
     
     # Client 값 확인
     pdName=request.POST.get('pdName', '0')
-    pdPrice=request.POST.get('pdPrice', 0)
+    pdPrice=request.POST.get('pdPrice', 111)
 
     # 데이터 저장
     pro=SampleProduct(pd_name = pdName,pd_price = pdPrice)

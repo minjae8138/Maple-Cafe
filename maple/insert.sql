@@ -13,6 +13,7 @@ DELETE FROM mapleApp_sampleproduct ;
 INSERT INTO mapleApp_sampleproduct(pd_name,pd_price) values ('Samsung','20000');
 INSERT INTO mapleApp_sampleproduct(pd_name,pd_price) values ('iPad','10000');
 INSERT INTO mapleApp_sampleproduct(pd_name,pd_price) values ('LG','30000');
+INSERT INTO mapleApp_sampleproduct(pd_name,pd_price) values ('test','30000');
 
 
 

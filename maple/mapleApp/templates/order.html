@@ -24,25 +24,11 @@
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/business-casual.min.css'  %}" rel="stylesheet">
-  <!-- 민재 style    -->
-  <style>
-      .table table-hover{
-        text-align : center ;
-      }
-      .pValueInput{
-
-        width : 40px;
-      }
-
-      .list-table{
-        width : 600px;
-        text-align : center ;
-      }
-
-      .amount{
-        padding-left : 300px;
-      }
-  </style>
+    <style>
+        .pValueInput{
+            width : 30px;
+        }
+    </style>
 
 </head>
 
@@ -92,9 +78,6 @@
 <!-- *************************** MAPLE : 공통 (HEADER) END  ******************  -->
 
 
-
-
-
 <!-- *************************** MAPLE : 화면 START *************************  -->
 
   <section class="page-section about-heading">
@@ -127,21 +110,22 @@
 
               <br>
 
-
+{%if menus %}
     <!--  MAPLE: 테이블  START  -->
               <div class="container d-flex justify-content-center mt-50 mb-50">
                 <div class="card w-100">
                   <div class="table-responsive">
-                    <div style="width:100%; height:300px; overflow:auto ">
+                    <div style="width:100%; height:600px; overflow:auto ">
                     <table class="table table-hover ">
     <!-- MAPLE:  테이블 헤더   -->
                       <thead class="thead-light">
                         <tr>
                           <th> </th>
-                          <th scope="col">번호</th>
+                          <th scope="col"></th>
                           <th scope="col">상품명</th>
                           <th scope="col">가격</th>
                           <th scope="col">수량</th>
+
                         </tr>
                       </thead>
 
@@ -150,46 +134,23 @@
 
 
 
-
+{%  for menu in  menus   %}
 
 
                       <tbody>
                         <tr>
-                          <td> <input  type="radio" name="radioValue" value="1"> </td>
-                          <td id="pId_1">1</td>
-                          <td id="pName_1" >아이스커피</td>
-                          <td id="pPrice_1">5100</td>
-                          <td class="pValue" id="pValue_1">
-                              <button type="button" onclick="calCount1('p')">+</button>
-                              <input class="pValueInput" id="pValueInput_1" type="text" name="pop_out" value="0" readonly="readonly"/>
-                              <button type="button" onclick="calCount1('m')">-</button>
-                          </td>
-
-                        </tr>
-                        <tr>
-                          <td> <input  type="radio" name="radioValue" value="2"> </td>
-                          <td id="pId_2">2</td>
-                          <td id="pName_2" >프라푸치노</td>
-                          <td id="pPrice_2">6100</td>
+                          <td> <input  type="radio" name="radioValue" value="{{menu.menuid}}"> </td>
+                          <td id="mId_{{menu.menuid}}">{{menu.menuid}}</td>
+                          <td id="mName_{{menu.menuid}}" >{{menu.menuname}}</td>
+                          <td id="mPrice_{{menu.menuid}}">{{menu.price}}</td>
                           <td class="pValue" id="pValue_2">
-                              <button type="button" onclick="calCount2('p')">+</button>
-                              <input class="pValueInput" id="pValueInput_2" type="text" name="pop_out" value="0" readonly="readonly"/>
-                              <button type="button" onclick="calCount2('m')">-</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td> <input  type="radio" name="radioValue" value="3"> </td>
-                          <td id="pId_3">3</td>
-                          <td id="pName_3" >아이스티</td>
-                          <td id="pPrice_3">5200</td>
-                          <td class="pValue" id="pValue_3">
-                              <button type="button" onclick="calCount3('p')">+</button>
-                              <input class="pValueInput" id="pValueInput_3" type="text" name="pop_out" value="0" readonly="readonly"/>
-                              <button type="button" onclick="calCount3('m')">-</button>
-                          </td>
-                        </tr>
 
+                              <input class="pValueInput" id="pValueInput_2" type="text"  placeholder="" />
 
+                          </td>
+
+                        </tr>
+{%    endfor    %}
 
                       </tbody>
                     </table>
@@ -199,12 +160,15 @@
               </div>
     <!--  MAPLE: 테이블  END -->
 
-
+ {% else %}
+       <p>  데이터가 존재하지 않습니다. </p>
+ {% endif %}
 <!--  MAPLE: BUTTON  2 -->
               <br>
               <div class="intro-button" align="right">
                 <button type="submit" class="btn btn-primary" id="inputBtn2">입력</button>
-
+<!--                <button type="submit" class="btn btn-primary" id="modiBtn2">수정</button>-->
+<!--                <button type="submit" class="btn btn-primary" id="delBtn2">삭제</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="serchBtn2">조회</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="saveBtn2">저장</button>-->
               </div>
@@ -218,7 +182,7 @@
 <!--  MAPLE:  TITLE  -->
               <h2 class="section-heading mb-4">
                 <img  src="{% static 'img/cafe_icon3.png'%}" width="40" height="40">
-                <span class="text-uppercase text-primary" > 주문내역 </span>
+                <span class="text-uppercase text-primary" > 상품정보 </span>
               </h2>
 
 <!--  MAPLE:  INPUT  -->
@@ -235,40 +199,23 @@
 
                         <div class="box-body">
                           <div class="form-group">
-                            <table class="list-table">
-                                <colgroup>
-                                    <col width="5%">
-                                    <col width="40%">
-                                    <col width="15%">
-                                    <col width="15%">
-                                    <col width="25%">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>메뉴</th>
-                                        <th>가격</th>
-                                        <th>수량</th>
-                                        <th>금액</th>
-
-
-                                    </tr>
-                                </thead>
-                                <tbody id="list-body">
-                                    <tr>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br>
-                            <br>
-                            <div class="amount">
-                                <span>합계</span>
-                                <span id="amount">0</span>
-                            </div>
+                            <label for="exampleInputEmail1"> ✔ 상품 아이디 </label>
+                              <input type="text" readonly="readonly"
+                                id='id' class="form-control" placeholder="">
                           </div>
 
+                          <div class="form-group">
+                            <label for="exampleInputEmail1"> ✔ 상품명 </label>
+                              <input type="text" readonly="readonly"
+                                id='pdName' name='pdName' class="form-control" placeholder="">
+                          </div>
 
-
+                          <div class="form-group">
+                            <label for="exampleInputEmail1"> ✔ 가격 </label>
+                              <input type="text"  readonly="readonly"
+                                id='pdPrice' name='pdPrice' class="form-control" placeholder="">
+                          </div>
+                          <input type="hidden" name="pID" id="pID"  value="">
                           <!--   업데이트 구분 : ( Y: 수정 , N:신규        -->
                           <input type="hidden" name="updateYn" id="updateYn"  value="N">
 
@@ -292,9 +239,9 @@
 <!--                <button type="submit" class="btn btn-primary" id="modiBtn3">수정</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="delBtn3">삭제</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="serchBtn3">조회</button>-->
-                  <button type="submit" class="btn btn-primary" id="modiBtn2">수정</button>
-                  <button type="submit" class="btn btn-primary" id="delBtn2">삭제</button>
-                  <button type="submit" class="btn btn-primary" id="saveBtn3">저장</button>
+                <button type="submit" class="btn btn-primary" id="modiBtn2">수정</button>
+                <button type="submit" class="btn btn-primary" id="delBtn2">삭제</button>
+                <button type="submit" class="btn btn-primary" id="saveBtn3">저장</button>
               </div>
               <br>
 <!-----------------MAPLE : Detail END ----------------->
@@ -314,9 +261,6 @@
 
 <!-- *************************** MAPLE : 화면 END ***************************  -->
 
-
-
-
 <!-- *************************** MAPLE : 공통 (FOOTER) START  ******************  -->
   <footer class="footer text-faded text-center py-5">
     <div class="container">
@@ -328,150 +272,98 @@
   <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 
-  <!-- 민재 스크립트 -->
-  <script>
-      function calCount1(type){
-        let pValue_1 = document.querySelector("#pValueInput_1")
-        let currentValue_1 = parseInt(pValueInput_1.value)
-
-        if(type==='p'){
-            console.log(1)
-            currentValue_1 += 1;
-            pValue_1.value= currentValue_1;
-
-
-        }else{
-            currentValue_1 -= 1;
-            pValue_1.value= currentValue_1;
-            pValue_1.innerText = currentValue_1;
-            }
-       }
-
-       function calCount2(type){
-        let pValue_2 = document.querySelector("#pValueInput_2")
-        let currentValue_2 = parseInt(pValueInput_2.value)
-
-        if(type==='p'){
-            console.log(1)
-            currentValue_2 += 1;
-            pValue_2.value= currentValue_2;
-
-
-        }else{
-            currentValue_2 -= 1;
-            pValue_2.value= currentValue_2;
-            pValue_2.innerText = currentValue_2;
-            }
-       }
-
-       function calCount3(type){
-        let pValue_3 = document.querySelector("#pValueInput_3")
-        let currentValue_3 = parseInt(pValueInput_3.value)
-
-        if(type==='p'){
-            console.log(1)
-            currentValue_3 += 1;
-            pValue_3.value= currentValue_3;
-
-
-        }else{
-            currentValue_3 -= 1;
-            pValue_3.value= currentValue_3;
-            pValue_3.innerText = currentValue_3;
-            }
-       }
-
-<!-- ******************버튼 기능************************   -->
-
-    // ---------------------------입력----------------------------------
-    var sum = 0
-    $('#inputBtn2').click(function(){
-        var checkbox = $("[name=radioValue]:checked");
-        var ckVal = checkbox.val()
-        var tdArr = new Array()
-
-
-        if (ckVal == null){
-            alert("항목을 선택해라")
-        }else{
-            // 입력창 활성화
-            $('#id').attr('readonly', false);
-
-            var tr = $('<tr></tr>')
-
-            var input = $('<input/>')
-            input.attr('type', 'checkbox')
-            input.attr('class', 'btn-chk')
-
-            var td00 = $('<td></td>');
-            td00.append(input);
-            tr.append(td00);
-
-            var td01 = $('<td></td>');
-            td01.append($('#pName_'+ckVal).text());
-            tr.append(td01);
-
-            var td02 = $('<td></td>');
-            td02.append($('#pPrice_'+ckVal).text());
-            tr.append(td02);
-            $('#list-body').append(tr);
-
-            var td03 = $('<td></td>');
-            td03.append($('#pValueInput_'+ckVal).val());
-            tr.append(td03);
-            $('#list-body').append(tr);
-
-            var td04 = $('<td></td>');
-            var amount = parseInt($('#pPrice_'+ckVal).text())*parseInt($('#pValueInput_'+ckVal).val())
-            td04.append(amount);
-            tr.append(td04);
-            $('#list-body').append(tr);
-
-            sum += amount
-
-            $('#amount').text(sum)
-       }
-    });
-
-    // -------------------------삭제---------------------------------------
-    $('#delBtn2').click(function(){
-        var $obj = $("input[class='btn-chk']")
-
-        var checkCount = $obj.length
-
-        for (var i=0; i<checkCount; i++){
-            if($obj.eq(i).is(":checked")){
-                sum = 0
-                $('#amount').text(sum)
-                console.log($obj.eq(i).children())
-                console.log($obj.eq(i).parent().children())
-                console.log($obj.eq(i))
-
-                $obj.eq(i).parent().parent().remove();
-                   }
-            }
-        })
-
-    // -------------------------저장-----------------------------------
-    $('#saveBtn3').click(function(){
-         var updateYn =$('#updateYn').val()
-
-         // 수정구분이 'Y' : 수정
-         if (updateYn == 'Y'){
-             $('#regForm').attr('action' , "{% url 'updateProduct' %}")
-             $('#regForm').submit() ;
-         // 수정구분이 'N' : 입력
-         }else{
-             $('#regForm').attr('action' , "{% url 'insertProduct' %}")
-             $('#regForm').submit() ;
-         }
-     })
-
-
-
-  </script>
-
 </body>
 
 </html>
 <!-- *************************** MAPLE : 공통 (FOOTER) END  ******************  -->
+
+
+<script>
+	$(document).ready(function(){
+         //----------------------------------
+         // 조회 : 상품등록 정보 조회
+         //----------------------------------
+	     $('#serchBtn1').click(function(){
+	         //alert("!조회버튼")
+			 location.href='../serchProduct'
+		 })
+
+
+         //----------------------------------
+         // 입력버튼 : 입력 항목 활성화
+         //----------------------------------
+	     $('#inputBtn2').click(function(){
+	         //alert("!입력버튼")
+			 $('#pdName, #pdPrice').attr('readonly', false);
+		 })
+
+         //----------------------------------
+         // 수정버튼 : 입력 항목 활성화
+         //----------------------------------
+	     $('#modiBtn2').click(function(){
+	         //alert("!수정버튼") ;
+             var checkbox = $("[name=radioValue]:checked");
+			 var ckVal= checkbox.val()
+             //alert( $('#pName_'+ckVal).text() )
+
+             // 선택된 버튼이 없으면 메세지
+             if (ckVal == null){
+                 alert('! 수정할 항목을 선택해 주세요. ')
+             }else{
+                 // 입력창을 활성화
+                 $('#pdName, #pdPrice').attr('readonly', false);
+
+                 // 선택된 행 정보 셋팅
+                 $('#pdName').val( $('#pName_'+ckVal).text()  ) ;
+                 $('#pdPrice').val( $('#pPrice_'+ckVal).text()  );
+
+                 $('#pID').val( ckVal  );
+                 // 업데이트 구분을 Y로 변경 "id
+                 $('#updateYn').val( "Y" );
+
+             }
+		 })
+
+
+         //----------------------------------
+         // 저장 : 수정/입력 내용저장
+         //----------------------------------
+	     $('#saveBtn3').click(function(){
+
+             var updateYn =$('#updateYn').val()
+
+             // 수정구분이 'Y' : 수정
+             if (updateYn == 'Y'){
+                 $('#regForm').attr('action' , "{% url 'updateProduct' %}")
+                 $('#regForm').submit() ;
+             // 수정구분이 'N' : 입력
+             }else{
+                 $('#regForm').attr('action' , "{% url 'insertProduct' %}")
+                 $('#regForm').submit() ;
+             }
+		 })
+
+         //----------------------------------
+         // 삭제
+         //----------------------------------
+	     $('#delBtn2').click(function(){
+	         //alert("!삭제버튼") ;
+             var checkbox = $("[name=radioValue]:checked");
+			 var ckVal= checkbox.val()
+             //alert( $('#pName_'+ckVal).text() )
+
+             // 선택된 버튼이 없으면 메세지
+             if (ckVal == null){
+                 alert('! 삭제할 항목을 선택해 주세요.  ')
+             }else{
+                 $('#pID').val( ckVal  );
+                 $('#regForm').attr('action' , "{% url 'deleteProduct' %}")
+                 $('#regForm').submit() ;
+
+             }
+		 })
+
+
+	})
+
+</script>

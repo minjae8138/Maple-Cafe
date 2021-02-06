@@ -26,9 +26,21 @@
   <link href="{% static 'css/business-casual.min.css'  %}" rel="stylesheet">
   <!-- 민재 style    -->
   <style>
-      .pCountInput{
+      .table table-hover{
+        text-align : center ;
+      }
+      .pValueInput{
 
-        width : 25px;
+        width : 40px;
+      }
+
+      .list-table{
+        width : 600px;
+        text-align : center ;
+      }
+
+      .amount{
+        padding-left : 300px;
       }
   </style>
 
@@ -87,7 +99,7 @@
 
   <section class="page-section about-heading">
     <div class="container">
-      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/about.jpg" alt="">
+      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">
       <div class="about-heading-content">
         <div class="row">
           <div class="col-xl-9 col-lg-10 mx-auto">
@@ -109,7 +121,7 @@
 <!--                <button type="submit" class="btn btn-primary" id="inputBtn1">입력</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="modiBtn1">수정</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="delBtn1">삭제</button>-->
-                <button type="submit" class="btn btn-primary" id="serchBtn1">조회</button>
+<!--                <button type="submit" class="btn btn-primary" id="serchBtn1">조회</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="saveBtn1">저장</button>-->
               </div>
 
@@ -126,7 +138,7 @@
                       <thead class="thead-light">
                         <tr>
                           <th> </th>
-                          <th scope="col">주문번호</th>
+                          <th scope="col">번호</th>
                           <th scope="col">상품명</th>
                           <th scope="col">가격</th>
                           <th scope="col">수량</th>
@@ -143,38 +155,36 @@
 
                       <tbody>
                         <tr>
-                          <td> <input  type="radio" name="radioValue" value="{{produc.id}}"> </td>
+                          <td> <input  type="radio" name="radioValue" value="1"> </td>
                           <td id="pId_1">1</td>
                           <td id="pName_1" >아이스커피</td>
                           <td id="pPrice_1">5100</td>
-                          <td class="pValue" id="pValue_1">0</td>
-                          <td id="pCount_1">
+                          <td class="pValue" id="pValue_1">
                               <button type="button" onclick="calCount1('p')">+</button>
-                              <input class="pCountInput" id="pCountInput_1" type="text" name="pop_out" value="0" readonly="readonly"/>
+                              <input class="pValueInput" id="pValueInput_1" type="text" name="pop_out" value="0" readonly="readonly"/>
                               <button type="button" onclick="calCount1('m')">-</button>
                           </td>
+
                         </tr>
                         <tr>
-                          <td> <input  type="radio" name="radioValue" value="{{produc.id}}"> </td>
+                          <td> <input  type="radio" name="radioValue" value="2"> </td>
                           <td id="pId_2">2</td>
                           <td id="pName_2" >프라푸치노</td>
                           <td id="pPrice_2">6100</td>
-                          <td class="pValue" id="pValue_2" >0</td>
-                          <td id="pCount_2">
+                          <td class="pValue" id="pValue_2">
                               <button type="button" onclick="calCount2('p')">+</button>
-                              <input class="pCountInput" id="pCountInput_2" type="text" name="pop_out" value="0" readonly="readonly"/>
+                              <input class="pValueInput" id="pValueInput_2" type="text" name="pop_out" value="0" readonly="readonly"/>
                               <button type="button" onclick="calCount2('m')">-</button>
                           </td>
                         </tr>
                         <tr>
-                          <td> <input  type="radio" name="radioValue" value="{{produc.id}}"> </td>
+                          <td> <input  type="radio" name="radioValue" value="3"> </td>
                           <td id="pId_3">3</td>
                           <td id="pName_3" >아이스티</td>
                           <td id="pPrice_3">5200</td>
-                          <td class="pValue" id="pValue_3" >0</td>
-                          <td id="pCount_3">
+                          <td class="pValue" id="pValue_3">
                               <button type="button" onclick="calCount3('p')">+</button>
-                              <input class="pCountInput" id="pCountInput_3" type="text" name="pop_out" value="0" readonly="readonly"/>
+                              <input class="pValueInput" id="pValueInput_3" type="text" name="pop_out" value="0" readonly="readonly"/>
                               <button type="button" onclick="calCount3('m')">-</button>
                           </td>
                         </tr>
@@ -225,9 +235,36 @@
 
                         <div class="box-body">
                           <div class="form-group">
-                            <label for="exampleInputEmail1"> ✔ 상품 아이디 </label>
-                              <input type="text" readonly="readonly"
-                                id='id' class="form-control" placeholder="">
+                            <table class="list-table">
+                                <colgroup>
+                                    <col width="5%">
+                                    <col width="40%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="25%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>메뉴</th>
+                                        <th>가격</th>
+                                        <th>수량</th>
+                                        <th>금액</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody id="list-body">
+                                    <tr>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <br>
+                            <div class="amount">
+                                <span>합계</span>
+                                <span id="amount">0</span>
+                            </div>
                           </div>
 
 
@@ -294,59 +331,65 @@
   <!-- 민재 스크립트 -->
   <script>
       function calCount1(type){
-        let pCountInput_1 = document.querySelector("#pCountInput_1");
-        let currentValue_1 = parseInt(pCountInput_1.value)
-        let pValue_1 = document.querySelector("#pValue_1")
+        let pValue_1 = document.querySelector("#pValueInput_1")
+        let currentValue_1 = parseInt(pValueInput_1.value)
+
         if(type==='p'){
             console.log(1)
             currentValue_1 += 1;
-            pCountInput_1.value= currentValue_1;
-            pValue_1.innerText = currentValue_1;
+            pValue_1.value= currentValue_1;
+
 
         }else{
             currentValue_1 -= 1;
-            pCountInput_1.value= currentValue_1;
+            pValue_1.value= currentValue_1;
             pValue_1.innerText = currentValue_1;
             }
        }
 
-        function calCount2(type){
-        let pCountInput_2 = document.querySelector("#pCountInput_2");
-        let currentValue_2 = parseInt(pCountInput_2.value)
-        let pValue_2 = document.querySelector("#pValue_2")
+       function calCount2(type){
+        let pValue_2 = document.querySelector("#pValueInput_2")
+        let currentValue_2 = parseInt(pValueInput_2.value)
+
         if(type==='p'){
+            console.log(1)
             currentValue_2 += 1;
-            pCountInput_2.value= currentValue_2;
-            pValue_2.innerText = currentValue_2;
+            pValue_2.value= currentValue_2;
+
 
         }else{
             currentValue_2 -= 1;
-            pCountInput_2.value= currentValue_2;
+            pValue_2.value= currentValue_2;
             pValue_2.innerText = currentValue_2;
             }
        }
 
        function calCount3(type){
-        let pCountInput_3 = document.querySelector("#pCountInput_3");
-        let currentValue_3 = parseInt(pCountInput_3.value)
-        let pValue_3 = document.querySelector("#pValue_3")
+        let pValue_3 = document.querySelector("#pValueInput_3")
+        let currentValue_3 = parseInt(pValueInput_3.value)
+
         if(type==='p'){
+            console.log(1)
             currentValue_3 += 1;
-            pCountInput_3.value= currentValue_3;
-            pValue_3.innerText = currentValue_3;
+            pValue_3.value= currentValue_3;
+
 
         }else{
             currentValue_3 -= 1;
-            pCountInput_3.value= currentValue_3;
+            pValue_3.value= currentValue_3;
             pValue_3.innerText = currentValue_3;
             }
        }
 
 <!-- ******************버튼 기능************************   -->
 
+    // ---------------------------입력----------------------------------
+    var sum = 0
     $('#inputBtn2').click(function(){
         var checkbox = $("[name=radioValue]:checked");
         var ckVal = checkbox.val()
+        var tdArr = new Array()
+
 
         if (ckVal == null){
             alert("항목을 선택해라")
@@ -354,14 +397,77 @@
             // 입력창 활성화
             $('#id').attr('readonly', false);
 
-            // $('#id').val( $('#pName_'+ckVal).text()  ) ;
-            // $('#pdPrice').val( $('#pPrice_'+ckVal).text()  );
-             $('#id').val( checkbox );
-             console.log(checkbox.val())
-             console.log(checkbox.val)
+            var tr = $('<tr></tr>')
 
-        }
+            var input = $('<input/>')
+            input.attr('type', 'checkbox')
+            input.attr('class', 'btn-chk')
+
+            var td00 = $('<td></td>');
+            td00.append(input);
+            tr.append(td00);
+
+            var td01 = $('<td></td>');
+            td01.append($('#pName_'+ckVal).text());
+            tr.append(td01);
+
+            var td02 = $('<td></td>');
+            td02.append($('#pPrice_'+ckVal).text());
+            tr.append(td02);
+            $('#list-body').append(tr);
+
+            var td03 = $('<td></td>');
+            td03.append($('#pValueInput_'+ckVal).val());
+            tr.append(td03);
+            $('#list-body').append(tr);
+
+            var td04 = $('<td></td>');
+            var amount = parseInt($('#pPrice_'+ckVal).text())*parseInt($('#pValueInput_'+ckVal).val())
+            td04.append(amount);
+            tr.append(td04);
+            $('#list-body').append(tr);
+
+            sum += amount
+
+            $('#amount').text(sum)
+       }
     });
+
+    // -------------------------삭제---------------------------------------
+    $('#delBtn2').click(function(){
+        var $obj = $("input[class='btn-chk']")
+
+        var checkCount = $obj.length
+
+        for (var i=0; i<checkCount; i++){
+            if($obj.eq(i).is(":checked")){
+                sum = 0
+                $('#amount').text(sum)
+                console.log($obj.eq(i).children())
+                console.log($obj.eq(i).parent().children())
+                console.log($obj.eq(i))
+
+                $obj.eq(i).parent().parent().remove();
+                   }
+            }
+        })
+
+    // -------------------------저장-----------------------------------
+    $('#saveBtn3').click(function(){
+         var updateYn =$('#updateYn').val()
+
+         // 수정구분이 'Y' : 수정
+         if (updateYn == 'Y'){
+             $('#regForm').attr('action' , "{% url 'updateProduct' %}")
+             $('#regForm').submit() ;
+         // 수정구분이 'N' : 입력
+         }else{
+             $('#regForm').attr('action' , "{% url 'insertProduct' %}")
+             $('#regForm').submit() ;
+         }
+     })
+
+
 
   </script>
 
