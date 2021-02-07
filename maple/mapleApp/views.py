@@ -85,13 +85,14 @@ def insertmenu(request):
     print('*> insertmenu :')
 
     # Client 값 확인
-    menuId = request.POST.get('menuId','0')
+    mId = request.POST.get('menuId','0')
     menuName = request.POST.get('menuName', '0')
     menuPrice = request.POST.get('menuPrice',0)
+    print('--------------------------------',mId)
 
 
     # 데이터 저장
-    pro = Menu(menuid=menuId, menuname=menuName, price=menuPrice)
+    pro = Menu(menuid=mId, menuname=menuName, price=menuPrice)
     pro.save()
 
     return redirect('serchmenu')
@@ -102,27 +103,27 @@ def updatemenu(request):
 
     #id = request.POST['id']
 
-    menuId = request.POST.get('mId', 0)
-    menuName=request.POST.get('menuName', '0')
+    mId = request.POST.get('menuid', 0)
+    menuName=request.POST.get('menuname', '0')
     menuPrice=request.POST.get('price', 0 )
 
-    print('request modify - ', menuId, menuName, menuPrice)
+    print('request modify - ', mId, menuName, menuPrice)
 
     # 데이터 수정
-    pro = Menu.objects.get(menuid=menuId)
-    pro.menuname = menuName
-    pro.price = menuPrice
-    pro.save()
+    men = Menu.objects.get(menuid=mId)
+    men.menuname = menuName
+    men.price = menuPrice
+    men.save()
     return redirect('serchmenu')
 
-# 샘플CRUD - 삭제
+# menu- 삭제
 def deletemenu(request):
     print('*> deleteProduct :')
     # Client 값 확인
-    mID = request.POST.get('mID','0')
-    print('request bbs_remove param - ' , mID)
+    mId = request.POST.get('mId','0')
+    print('request bbs_remove param - ' , mId)
     # 데이터 수정
-    Menu.objects.get(menuid=mID).delete()
+    Menu.objects.get(menuid=mId).delete()
     #화면이동
     return redirect('serchmenu')
 

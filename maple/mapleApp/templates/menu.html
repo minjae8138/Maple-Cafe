@@ -209,7 +209,7 @@
                               <input type="text"  readonly="readonly"
                                 id='menuPrice' class="form-control" placeholder="">
                           </div>
-                          <input type="hidden" name="mID" id="mID"  value="">
+                          <input type="hidden" name="mId" id="mId"  value="">
                           <!--   업데이트 구분 : ( Y: 수정 , N:신규        -->
                           <input type="hidden" name="updateYn" id="updateYn"  value="N">
 
@@ -280,27 +280,12 @@
          //----------------------------------
          // 입력버튼 : 입력 항목 활성화
          //----------------------------------
+	     $('#inputBtn2').click(function(){
 	         //alert("!입력버튼")
 			 $('#menuName, #menuPrice').attr('readonly', false);
 		 })
 
-
-		 $('#saveBtn3').click(function(){
-
-             var updateYn =$('#updateYn').val()
-
-             // 수정구분이 'Y' : 수정
-             if (updateYn == 'Y'){
-                 $('#regForm').attr('action' , "{% url 'updatemenu' %}")
-                 $('#regForm').submit() ;
-             // 수정구분이 'N' : 입력
-             }else{
-                 $('#regForm').attr('action' , "{% url 'insertmenu' %}")
-                 $('#regForm').submit() ;
-             }
-		 })
-
-	  //----------------------------------
+         //----------------------------------
          // 수정버튼 : 입력 항목 활성화
          //----------------------------------
 	     $('#modiBtn2').click(function(){
@@ -320,14 +305,36 @@
                  $('#menuName').val( $('#mName_'+ckVal).text()  ) ;
                  $('#menuPrice').val( $('#mPrice_'+ckVal).text()  );
 
-                 $('#mID').val( ckVal  );
+                 $('#mId').val( ckVal  );
                  // 업데이트 구분을 Y로 변경 "id
                  $('#updateYn').val( "Y" );
 
              }
 		 })
 
-	  $('#delBtn2').click(function(){
+
+         //----------------------------------
+         // 저장 : 수정/입력 내용저장
+         //----------------------------------
+	     $('#saveBtn3').click(function(){
+
+             var updateYn =$('#updateYn').val()
+
+             // 수정구분이 'Y' : 수정
+             if (updateYn == 'Y'){
+                 $('#regForm').attr('action' , "{% url 'updatemenu' %}")
+                 $('#regForm').submit() ;
+             // 수정구분이 'N' : 입력
+             }else{
+                 $('#regForm').attr('action' , "{% url 'insertmenu' %}")
+                 $('#regForm').submit() ;
+             }
+		 })
+
+         //----------------------------------
+         // 삭제
+         //----------------------------------
+	     $('#delBtn2').click(function(){
 	         //alert("!삭제버튼") ;
              var checkbox = $("[name=radioValue]:checked");
 			 var ckVal= checkbox.val()
@@ -337,12 +344,15 @@
              if (ckVal == null){
                  alert('! 삭제할 항목을 선택해 주세요.  ')
              }else{
-                 $('#mID').val( ckVal  );
+                 $('#mId').val( ckVal  );
                  $('#regForm').attr('action' , "{% url 'deletemenu' %}")
                  $('#regForm').submit() ;
 
              }
 		 })
+
+
+	})
 
 
 

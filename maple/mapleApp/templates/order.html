@@ -194,28 +194,28 @@
                     <div class="box box-primary">
                     <!-- /.box-header -->
 
-                      <form id="regForm"  method="post" action="{% url 'insertProduct' %}" >
+                      <form id="regForm"  method="post" action="{% url 'insertmenu' %}" >
                       {% csrf_token %}
 
                         <div class="box-body">
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ✔ 상품 아이디 </label>
                               <input type="text" readonly="readonly"
-                                id='id' class="form-control" placeholder="">
+                                id='menuId' name='menuId' class="form-control" placeholder="">
                           </div>
 
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ✔ 상품명 </label>
                               <input type="text" readonly="readonly"
-                                id='pdName' name='pdName' class="form-control" placeholder="">
+                                id='menuName' name='menuName' class="form-control" placeholder="">
                           </div>
 
                           <div class="form-group">
                             <label for="exampleInputEmail1"> ✔ 가격 </label>
                               <input type="text"  readonly="readonly"
-                                id='pdPrice' name='pdPrice' class="form-control" placeholder="">
+                                id='menuPrice' name='menuPrice' class="form-control" placeholder="">
                           </div>
-                          <input type="hidden" name="pID" id="pID"  value="">
+                          <input type="hidden" name="mId" id="mId"  value="">
                           <!--   업데이트 구분 : ( Y: 수정 , N:신규        -->
                           <input type="hidden" name="updateYn" id="updateYn"  value="N">
 
@@ -285,7 +285,7 @@
          //----------------------------------
 	     $('#serchBtn1').click(function(){
 	         //alert("!조회버튼")
-			 location.href='../serchProduct'
+			 location.href='../serchmenu'
 		 })
 
 
@@ -294,7 +294,7 @@
          //----------------------------------
 	     $('#inputBtn2').click(function(){
 	         //alert("!입력버튼")
-			 $('#pdName, #pdPrice').attr('readonly', false);
+			 $('#menuName, #menuPrice').attr('readonly', false);
 		 })
 
          //----------------------------------
@@ -304,20 +304,20 @@
 	         //alert("!수정버튼") ;
              var checkbox = $("[name=radioValue]:checked");
 			 var ckVal= checkbox.val()
-             //alert( $('#pName_'+ckVal).text() )
+             //alert( $('#mName_'+ckVal).text() )
 
              // 선택된 버튼이 없으면 메세지
              if (ckVal == null){
                  alert('! 수정할 항목을 선택해 주세요. ')
              }else{
                  // 입력창을 활성화
-                 $('#pdName, #pdPrice').attr('readonly', false);
+                 $('#menuName, #menuPrice').attr('readonly', false);
 
                  // 선택된 행 정보 셋팅
-                 $('#pdName').val( $('#pName_'+ckVal).text()  ) ;
-                 $('#pdPrice').val( $('#pPrice_'+ckVal).text()  );
+                 $('#menuName').val( $('#mName_'+ckVal).text()  ) ;
+                 $('#menuPrice').val( $('#mPrice_'+ckVal).text()  );
 
-                 $('#pID').val( ckVal  );
+                 $('#mId').val( ckVal  );
                  // 업데이트 구분을 Y로 변경 "id
                  $('#updateYn').val( "Y" );
 
@@ -334,11 +334,11 @@
 
              // 수정구분이 'Y' : 수정
              if (updateYn == 'Y'){
-                 $('#regForm').attr('action' , "{% url 'updateProduct' %}")
+                 $('#regForm').attr('action' , "{% url 'updatemenu' %}")
                  $('#regForm').submit() ;
              // 수정구분이 'N' : 입력
              }else{
-                 $('#regForm').attr('action' , "{% url 'insertProduct' %}")
+                 $('#regForm').attr('action' , "{% url 'insertmenu' %}")
                  $('#regForm').submit() ;
              }
 		 })
@@ -350,14 +350,14 @@
 	         //alert("!삭제버튼") ;
              var checkbox = $("[name=radioValue]:checked");
 			 var ckVal= checkbox.val()
-             //alert( $('#pName_'+ckVal).text() )
+             //alert( $('#mName_'+ckVal).text() )
 
              // 선택된 버튼이 없으면 메세지
              if (ckVal == null){
                  alert('! 삭제할 항목을 선택해 주세요.  ')
              }else{
-                 $('#pID').val( ckVal  );
-                 $('#regForm').attr('action' , "{% url 'deleteProduct' %}")
+                 $('#mId').val( ckVal  );
+                 $('#regForm').attr('action' , "{% url 'deletemenu' %}")
                  $('#regForm').submit() ;
 
              }
