@@ -38,20 +38,52 @@ def salesStatus(request):
 
 
 #----------------------< 김민재 >----------------------#
+
 def order(request):
-    # return redirect('menuProduct')
-    return redirect('serchorder')
-
-def serchorder(request):
-    print('*> serchmenu :')
+    # print('*> serchmenu :')
     menus = Menu.objects.all()
-    print('menus', menus)
-    # title  writer  content  regdata  viewcnt
-    # print('*>producs -', type(producs), producs)
+    # print('menus', menus)
     context = {'menus': menus}
-
+    print('-------------------------------------')
 
     return render(request, 'order.html', context)
+
+
+def saveOrder(request) :
+    mID = request.POST.get('menuId','0')
+    mOrderno = request.POST.get('orderNo', '0')
+    mPrice = request.POST.get('mPrice', 0)
+    mQty = request.POST.get('mValue', 0)
+    print('request  saveOrder- ', mID ,mOrderno, mPrice, mQty)
+
+    # print('-------------------------')
+    # menu = Menu.objects.get(menuid=mID)
+    # print(menu)
+    # order = Order.objects.get(orderno=mOrderno)
+    # savodd = OrderDetail(
+    #     menuid = menu.menuid,
+    #     orderno = order.orderno,
+    #     price = mPrice,
+    #     qty = mQty
+    # )
+    # print(savodd)
+    # savodd.save()
+    #
+    # print('------------------------')
+
+    # mOrderno = request.POST.get('mOrderNo', '0')
+    # mOrderDate = request.POST.get('now', '2021-02-06 10:01:00')
+    # mPayment = request.POST.get('', 'card')
+    # mStatus = request.POST.get('', 'order')
+    # savod = Order(
+    #     orderno = mOrderno,
+    #     orderdate = mOrderDate,
+    #     payment = mPayment,
+    #     status = mStatus,
+    # )
+    # savod.save()
+
+    return redirect('order')
 
 
 #----------------------< 심영석 >----------------------#
@@ -63,11 +95,11 @@ def serchorder(request):
 
 
 #----------------------< 정연욱 >----------------------#
-# order page 실험
+# menu page
 def menu(request):
     return redirect('serchmenu')
 
-
+    #
 def serchmenu(request):
     print('*> serchmenu :')
     menus = Menu.objects.all()
@@ -76,9 +108,8 @@ def serchmenu(request):
     # print('*>producs -', type(producs), producs)
     context = {'menus': menus}
 
-
+    menuName = request.POST.get('menuName', '0')
     return render(request, 'menu.html', context)
-
 
 # 샘플CRUD - 입력
 def insertmenu(request):
@@ -89,6 +120,7 @@ def insertmenu(request):
     menuName = request.POST.get('menuName', '0')
     menuPrice = request.POST.get('menuPrice',0)
     print('--------------------------------',mId)
+
 
 
     # 데이터 저장
@@ -103,14 +135,14 @@ def updatemenu(request):
 
     #id = request.POST['id']
 
-    mId = request.POST.get('menuid', 0)
-    menuName=request.POST.get('menuname', '0')
-    menuPrice=request.POST.get('price', 0 )
+    menuId = request.POST.get('menuId', 0)
+    menuName=request.POST.get('menuName', '0')
+    menuPrice=request.POST.get('menuPrice', 0 )
 
-    print('request modify - ', mId, menuName, menuPrice)
+    print('request modify - ', menuId, menuName, menuPrice)
 
     # 데이터 수정
-    men = Menu.objects.get(menuid=mId)
+    men = Menu.objects.get(menuid=menuId)
     men.menuname = menuName
     men.price = menuPrice
     men.save()

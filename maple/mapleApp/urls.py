@@ -23,7 +23,8 @@ urlpatterns = [
 
 
 #----------------------< 김민재 >----------------------#
-    path('serchorder/'    , views.serchorder      ,name='serchorder'),
+
+    path('saveOrder/'    , views.saveOrder      ,name='saveOrder'),
 
 #----------------------< 심영석 >----------------------#
 
