@@ -57,8 +57,8 @@ def saveOrder(request) :
     print('request  saveOrder- ', mID ,mOrderno, mPrice, mQty)
 
     # print('-------------------------')
-    # menu = Menu.objects.get(menuid=mID)
-    # print(menu)
+    menu = Menu.objects.get(menuid=mID)
+    print(menu)
     # order = Order.objects.get(orderno=mOrderno)
     # savodd = OrderDetail(
     #     menuid = menu.menuid,
@@ -116,10 +116,13 @@ def insertmenu(request):
     print('*> insertmenu :')
 
     # Client 값 확인
-    mId = request.POST.get('menuId','0')
+    mId = request.POST.get('mId','0')
     menuName = request.POST.get('menuName', '0')
     menuPrice = request.POST.get('menuPrice',0)
     print('--------------------------------',mId)
+    me = Menu.objects.get(menuid=mId)
+    print(me)
+
 
 
 
