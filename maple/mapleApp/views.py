@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import *
 from .models import *
+from datetime import datetime
+from django.db.models import Max, functions
 
 
 #----------------------< 공통 : 메뉴이동>--------------------#
@@ -50,39 +52,71 @@ def order(request):
 
 
 def saveOrder(request) :
-    mID = request.POST.get('menuId','0')
-    mOrderno = request.POST.get('orderNo', '0')
-    mPrice = request.POST.get('mPrice', 0)
-    mQty = request.POST.get('mValue', 0)
-    print('request  saveOrder- ', mID ,mOrderno, mPrice, mQty)
+    # ---------------------------
+    # 1. orderno 채번
+    # ---------------------------
+    today = datetime.today()
+    todate = datetime.strftime(today, '%Y-%m-%d')
 
-    # print('-------------------------')
-    menu = Menu.objects.get(menuid=mID)
-    print(menu)
-    # order = Order.objects.get(orderno=mOrderno)
-    # savodd = OrderDetail(
-    #     menuid = menu.menuid,
-    #     orderno = order.orderno,
-    #     price = mPrice,
-    #     qty = mQty
-    # )
-    # print(savodd)
-    # savodd.save()
-    #
-    # print('------------------------')
+    # 주문번호 : RYYYYMMDD + '00001'
+    new_orderno = 'R' + datetime.strftime(today, '%Y%m%d') + '00001'
 
-    # mOrderno = request.POST.get('mOrderNo', '0')
-    # mOrderDate = request.POST.get('now', '2021-02-06 10:01:00')
-    # mPayment = request.POST.get('', 'card')
-    # mStatus = request.POST.get('', 'order')
-    # savod = Order(
-    #     orderno = mOrderno,
-    #     orderdate = mOrderDate,
-    #     payment = mPayment,
-    #     status = mStatus,
-    # )
-    # savod.save()
+    # 주문번호 : 당일 주문  조회
+    od = Order.objects.values('orderdate').filter(orderdate=todate).annotate(max_orderno=Max('orderno'))
 
+    # 주문번호 : 당일 주문 있으면  다음번호 채번
+    if od:
+        a = od[0]['max_orderno']
+        new_orderno = 'R' + datetime.strftime(today, '%Y%m%d') + str(int(a[9:]) + 1).zfill(5)
+    print('new_orderno - ', new_orderno)
+
+    # -------------------------------
+    # 2. 날짜분할(orderdate, ordertime)
+    # -------------------------------
+
+    # 주문날짜(orderdate)
+    mDate = datetime.strftime(today, '%Y-%m-%d')
+
+    # 주문시간(ordertime)
+    mTime = datetime.strftime(today, '%H:%M:%S')
+
+    # -------------------------------
+    # 3. Order 테이블 저장
+    # -------------------------------
+    mID = request.POST.getlist('hmid[]')
+    mPrice = request.POST.getlist('hprice[]')
+    mQty = request.POST.getlist('hqty[]')
+    print('mID ', mID)
+    print('mPrice ', mPrice)
+    print('mQty ', mQty)
+    print('-------------------------')
+
+
+    # mDate = request.POST.get('hdate')
+    # mTime = request.POST.get('htime')
+    mPay = request.POST.get('hpay')
+    mStat = request.POST.get('hstat')
+    ord = Order(orderno=new_orderno, orderdate=mDate, ordertime=mTime, payment=mPay,
+                               status = mStat)
+    ord.save()
+    print(ord)
+
+    # -------------------------------
+    # 4. OrderDetail 테이블 저장
+    # -------------------------------
+    for i in range(len(mID)) :
+        menu = Menu.objects.get(menuid=mID[i])
+        # print('menu',menu)
+
+    for i in range(len(mID)) :
+        ordd = OrderDetail(
+            orderno = ord,
+            menuid = menu,
+            price = mPrice[i],
+            qty = mQty[i],
+        )
+        ordd.save()
+    # ---------------------------------
     return redirect('order')
 
 
@@ -99,7 +133,7 @@ def saveOrder(request) :
 def menu(request):
     return redirect('serchmenu')
 
-    #
+
 def serchmenu(request):
     print('*> serchmenu :')
     menus = Menu.objects.all()
@@ -108,7 +142,7 @@ def serchmenu(request):
     # print('*>producs -', type(producs), producs)
     context = {'menus': menus}
 
-    menuName = request.POST.get('menuName', '0')
+
     return render(request, 'menu.html', context)
 
 # 샘플CRUD - 입력
@@ -116,18 +150,12 @@ def insertmenu(request):
     print('*> insertmenu :')
 
     # Client 값 확인
-    mId = request.POST.get('mId','0')
+    menuId = request.POST.get('menuId','0')
     menuName = request.POST.get('menuName', '0')
     menuPrice = request.POST.get('menuPrice',0)
-    print('--------------------------------',mId)
-    me = Menu.objects.get(menuid=mId)
-    print(me)
-
-
-
-
+    print(menuId, menuName, menuPrice)
     # 데이터 저장
-    pro = Menu(menuid=mId, menuname=menuName, price=menuPrice)
+    pro = Menu(menuid=menuId,menuname=menuName, price=menuPrice)
     pro.save()
 
     return redirect('serchmenu')
@@ -138,7 +166,7 @@ def updatemenu(request):
 
     #id = request.POST['id']
 
-    menuId = request.POST.get('menuId', 0)
+    menuId = request.POST.get('menuId', '0')
     menuName=request.POST.get('menuName', '0')
     menuPrice=request.POST.get('menuPrice', 0 )
 
@@ -155,10 +183,10 @@ def updatemenu(request):
 def deletemenu(request):
     print('*> deleteProduct :')
     # Client 값 확인
-    mId = request.POST.get('mId','0')
-    print('request bbs_remove param - ' , mId)
+    menuId = request.POST.get('menuId','0')
+    print('request bbs_remove param - ' , menuId)
     # 데이터 수정
-    Menu.objects.get(menuid=mId).delete()
+    Menu.objects.get(menuid=menuId).delete()
     #화면이동
     return redirect('serchmenu')
 
@@ -169,15 +197,15 @@ def deletemenu(request):
 
 
 #----------------------< sample >----------------------#
-# 샘플화면 
+# 샘플화면
 def sampleUi(request):
     print('*> sampleUi :')
-    
+
     return render(request,'sample_ui.html')
-# 샘플CRUD - 상품관리 
+# 샘플CRUD - 상품관리
 def sampleCrud(request):
     print('*> sampleCrud :')
-    
+
     return redirect('serchProduct')
 
 # 샘플CRUD - 상품조회
@@ -188,17 +216,18 @@ def serchProduct(request):
     # title  writer  content  regdata  viewcnt
     # print('*>producs -', type(producs), producs)
     context = {'producs': producs}
-    
+
     return render(request, 'sample_crud.html', context)
 
 # 샘플CRUD - 입력
 def insertProduct(request):
     print('*> insertProduct :')
-    
+
     # Client 값 확인
     pdName=request.POST.get('pdName', '0')
     pdPrice=request.POST.get('pdPrice', 111)
-
+    print('-------------------')
+    print(pdName,pdPrice)
     # 데이터 저장
     pro=SampleProduct(pd_name = pdName,pd_price = pdPrice)
     pro.save()
@@ -212,7 +241,7 @@ def updateProduct(request):
 
     #id = request.POST['id']
 
-    pID = request.POST.get('pID', 0)
+    pID = request.POST.get('pID', '0')
     pdName=request.POST.get('pdName', '0')
     pdPrice=request.POST.get('pdPrice', 0 )
 
@@ -233,7 +262,7 @@ def updateProduct(request):
 def deleteProduct(request):
     print('*> deleteProduct :')
     # Client 값 확인
-    pID = request.POST.get('pID',0)
+    pID = request.POST.get('pID','0')
     print('request bbs_remove param - ' , pID)
     # 데이터 수정
     SampleProduct.objects.get(id=pID).delete()

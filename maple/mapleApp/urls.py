@@ -45,7 +45,7 @@ urlpatterns = [
     # sample
     path('sampleUi/'    , views.sampleUi      ,name='sampleUi'),
     path('sampleCrud/'  , views.sampleCrud    ,name='sampleCrud'),
-    
+
     #상품조회
     path('serchProduct/', views.serchProduct  ,name='serchProduct'),
 

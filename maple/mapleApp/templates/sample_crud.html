@@ -298,11 +298,12 @@
              }else{
                  // 입력창을 활성화
                  $('#pdName, #pdPrice').attr('readonly', false);
+                 console.log(ckVal)
 
                  // 선택된 행 정보 셋팅
                  $('#pdName').val( $('#pName_'+ckVal).text()  ) ;
                  $('#pdPrice').val( $('#pPrice_'+ckVal).text()  );
-
+                 $('#id').val( ckVal  );
                  $('#pID').val( ckVal  );
                  // 업데이트 구분을 Y로 변경 "id
                  $('#updateYn').val( "Y" );
@@ -324,8 +325,8 @@
                  $('#regForm').submit() ;
              // 수정구분이 'N' : 입력
              }else{
-                 $('#regForm').attr('action' , "{% url 'insertProduct' %}")
                  $('#regForm').submit() ;
+                 $('#regForm').attr('action' , "{% url 'insertProduct' %}")
              }
 		 })
 
@@ -342,6 +343,7 @@
              if (ckVal == null){
                  alert('! 삭제할 항목을 선택해 주세요.  ')
              }else{
+                 console.log(ckVal)
                  $('#pID').val( ckVal  );
                  $('#regForm').attr('action' , "{% url 'deleteProduct' %}")
                  $('#regForm').submit() ;
