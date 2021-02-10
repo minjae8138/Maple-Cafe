@@ -27,7 +27,10 @@ urlpatterns = [
     path('saveOrder/'    , views.saveOrder      ,name='saveOrder'),
 
 #----------------------< 심영석 >----------------------#
-
+    path('register/', views.register, name='register'),
+    path('registerForm/', views.registerForm, name='registerForm'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
 #----------------------< 박우환 >----------------------#
 
 #----------------------< 오은영 >----------------------#

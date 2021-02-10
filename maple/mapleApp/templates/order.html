@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 {% load static%}
 {% load humanize %}
+{% include 'header.html' %}
 
 <html lang="en">
 
@@ -29,45 +30,75 @@
         .pValueInput{
             width : 30px;
         }
-        .list-table{
-            width : 600px;
-            text-align : center ;
-        }
-        #list-body{
-            width : 600px;
-            background-color : green;
-            height : 10px;
-        }
-<!--        .img-fluid rounded about-heading-img mb-3 mb-lg-0{-->
-<!--            position: absolute ;-->
-<!--            top : 50%;-->
-<!--        }-->
-<!--        .container{-->
-<!--            margin : 0;-->
-<!--            -->
-<!--        }-->
-<!--        .about-heading-content{-->
-<!--            width : 1500px;-->
-<!--        }-->
-<!--        .bg-faded rounded p-5{-->
-<!--            width : 1000px;-->
-<!--        }-->
-<!--        .col-xl-9 col-lg-10 mx-auto{-->
-<!--            margin: 0;-->
-<!--        }-->
 
+        .list-table{
+            width : 751px;
+            text-align : center ;
+            border: solid 3px #ecf0f1;
+            margin-left : 12px ;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
+        }
+        .list-body{
+            text-align : center ;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
+        }
+
+        #inputBtn2{
+            margin-right : 15px ;
+        }
+        #saveBtn3{
+            margin-right : 15px ;
+        }
         #hname{
             width : 100%;
+            text-align : center;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
         }
         #hprice{
             width : 100%;
+            text-align : center;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
         }
         #hqty{
             width: 100%;
+            text-align : center;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
+
         }
         #hamount{
-            width : 100%;
+
+            //border-right-width: 2em;
+            text-align : center;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
         }
+        .amount{
+            display : inline;
+            margin-left : 513px;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
+        }
+        #payment{
+            margin-left : 15px;
+            font-weight : bold;
+            font-family: Lora;
+            color : #495057 ;
+        }
+
+
+
 
 
     </style>
@@ -124,18 +155,18 @@
 
   <section class="page-section about-heading">
     <div class="container">
-<!--      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">-->
+<!--      -->
       <div class="about-heading-content">
         <div class="row">
           <div class="col-xl-9 col-lg-10 mx-auto">
-            <div class="bg-faded rounded p-5">
+            <div class="bg-faded rounded p-4">
 
 
 
 <!-----------------MAPLE : List START ----------------->
 <!--  MAPLE:  TITLE  -->
 
-              <h2 class="section-heading mb-4">
+              <h2 class="section-heading mb-1">
                 <img  src="{% static 'img/cafe_icon3.png'%}" width="40" height="40">
                 <span class="text-uppercase text-primary"> 주문 </span>
               </h2>
@@ -157,7 +188,7 @@
               <div class="container d-flex justify-content-center mt-50 mb-50">
                 <div class="card w-100">
                   <div class="table-responsive">
-                    <div style="width:100%; height:600px; overflow:auto ">
+                    <div style="width:100%; height:330px; overflow:auto ">
                     <table class="table table-hover ">
     <!-- MAPLE:  테이블 헤더   -->
                       <thead class="thead-light">
@@ -167,7 +198,6 @@
                           <th scope="col">상품명</th>
                           <th scope="col">가격</th>
                           <th scope="col">수량</th>
-
                         </tr>
                       </thead>
 
@@ -215,7 +245,7 @@
 <!--                <button type="submit" class="btn btn-primary" id="serchBtn2">조회</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="saveBtn2">저장</button>-->
               </div>
-              <br>
+
 
 
 <!-----------------MAPLE : List END ----------------->
@@ -225,7 +255,7 @@
 <!--  MAPLE:  TITLE  -->
               <h2 class="section-heading mb-4">
                 <img  src="{% static 'img/cafe_icon3.png'%}" width="40" height="40">
-                <span class="text-uppercase text-primary" > 상품정보 </span>
+                <span class="text-uppercase text-primary" > 주문내역 </span>
               </h2>
 
 <!--  MAPLE:  INPUT  -->
@@ -259,22 +289,23 @@
                                         <th>금액</th>
                                     </tr>
                                 </thead>
-                                <tbody id="list-body">
+                                <tbody id="list-body"></tbody>
 
-                                </tbody>
                             </table>
                             <br>
-                            <br>
-                            <div class="amount">
-                                <span>합계</span>
-                                <span id="amount">0</span>
+                            <div class="btn-box">
+                                <select name="payment" id="payment" >
+                                    <option value="">--결제방법--</option>
+                                    <option value="card">카드</option>
+                                    <option value="cash">현금</option>
+                                </select>
+                                <div class="amount">
+                                    <span>합계</span>
+                                    <span id="amount"></span>
+                                </div>
                             </div>
 
-                            <select name="payment" id="payment" >
-                                <option value="">--결제방법--</option>
-                                <option value="card">card</option>
-                                <option value="cash">cash</option>
-                            </select>
+
                           </div>
 
 
@@ -324,6 +355,7 @@
 <!-- *************************** MAPLE : 화면 END ***************************  -->
 
 <!-- *************************** MAPLE : 공통 (FOOTER) START  ******************  -->
+<!--  <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">-->
   <footer class="footer text-faded text-center py-5">
     <div class="container">
       <p class="m-0 small">Copyright &copy; Your Website 2021</p>
@@ -342,10 +374,14 @@
 
 <script>
 
-
+     <!--    콤마 제거 후 int 변환하는 함수
+    // 이게 없으면 콤마형식의 가격과 수량의 연산x, price값이 서버로 안 넘어감(number로 지정됨)  -->
+    function removeComma(str){
+        n = parseInt(str.replace(/,/g,""));
+        return n;
+    }
 
 	$(document).ready(function(){
-
 	    var sum = 0
         $('#inputBtn2').click(function(){
             var checkbox = $("[name=radioValue]:checked");
@@ -353,78 +389,87 @@
             var tdArr = new Array()
 
             if (ckVal == null){
-                alert("항목을 선택해라")
+                alert("항목을 선택하시오")
             }else{
-
-                //var tr = $('<tr></tr>')
+                <!--         체크박스               -->
                 var tr = $('<tr></tr>')
-
                 var input = $('<input/>')
                 input.attr('type', 'checkbox')
-
-                input.attr('class', 'btn-chk')
+                input.attr('name', 'btn-chk')
+                input.attr('value',$('#mId_'+ckVal).text())
                 var td00 = $('<td></td>');
                 td00.append(input);
                 tr.append(td00);
 
-
-                <!--  hidden 추가 (메뉴아이디)               -->
+                <!--  hidden 추가 (메뉴아이디)        -->
                 var hdMid = $('<input/>')
                 hdMid.attr('type', 'hidden')
                 hdMid.attr('name', 'hmid[]')
                 hdMid.attr('value',$('#mId_'+ckVal).text() )
                 tr.append(hdMid)
 
-
                 <!--         메뉴               -->
+                var td01 = $('<td></td>');
                 var hdName = $('<input/>')
                 hdName.attr('id', 'hname')
                 hdName.attr('name', 'hname[]')
-                hdName.attr('value',$('#mName_'+ckVal).text() )
-                tr.append(hdName)
 
+                hdName.attr('value',$('#mName_'+ckVal).text() )
+                td01.append(hdName);
+                tr.append(td01)
 
                 <!--         가격             -->
-                <!--    콤마 제거 후 int 변환하는 함수
-                        // 이게 없으면 콤마형식의 가격과 수량의 연산x, price값이 서버로 안 넘어감(number로 지정됨)  -->
-                function removeComma(str){
-                    n = parseInt(str.replace(/,/g,""));
-                    return n;
-                }
-
                 var hdPrice = $('<input/>')
+                var td02 = $('<td></td>');
                 hdPrice.attr('id', 'hprice')
                 hdPrice.attr('name', 'hprice[]')
                 hdPrice.attr('value',removeComma($('#mPrice_'+ckVal).text()) )
-                tr.append(hdPrice)
-                console.log(removeComma($('#mPrice_'+ckVal).text()))
-                console.log(typeof(parseInt($('#mPrice_'+ckVal).text())))
-
+                td02.append(hdPrice);
+                tr.append(td02)
 
                 <!--          수량            -->
                 var hdQty = $('<input/>')
+                var td03 = $('<td></td>');
+                td03.append(hdQty);
                 hdQty.attr('id', 'hqty')
                 hdQty.attr('name', 'hqty[]')
                 hdQty.attr('value',$('#pValueInput_'+ckVal).val() )
-                tr.append(hdQty)
-
+                tr.append(td03)
 
                 <!--         주문합계          -->
-
-
                 var hdAmount = $('<input/>');
+                var td04 = $('<td></td>');
+                td04.append(hdAmount);
                 hdAmount.attr('id','hamount')
+                hdAmount.attr('name','hamount[]')
                 var amount = removeComma($('#mPrice_'+ckVal).text())*parseInt($('#pValueInput_'+ckVal).val())
                 hdAmount.append(amount);
-                hdAmount.val(hdAmount.text())
-                tr.append(hdAmount);
+
+                hdAmount.val(amount)
+                tr.append(td04);
                 $('#list-body').append(tr);
+
+                <!--    합계누적               -->
+                sum += amount
+                $('#amount').text(sum)
+
+<!--                $('#amount').attr('name','amount[]')-->
+<!--                $('#amount').attr('value','sum)-->
+
+                 <!--  hidden 결제방법         -->
+                var hdSum = $('<input/>')
+                hdSum.attr('type','hidden')
+                hdSum.attr('name','hsum[]')
+                console.log($('#amount').text())
+                hdSum.attr('value',$('#amount').text())
+
+                tr.append(hdSum)
+
 
                  <!--  hidden 결제방법         -->
                 var hdPay = $('<input/>')
                 hdPay.attr('type','hidden')
                 hdPay.attr('value',$('#payment').val())
-
                 tr.append(hdPay)
 
                  <!--  hidden 주문상태         -->
@@ -434,52 +479,46 @@
                 hdStat.attr('value','done')
                 tr.append(hdStat)
 
-                <!--    합계누적               -->
-                sum += amount
-                $('#amount').text(sum)
+                $('#td01').attr("readonly",true)
+
+
            }
-
         });
-
-
 
      //----------------------------------
      // 저장
      //----------------------------------
     $('#saveBtn3').click(function(){
-
-        var check = $("[class=btn-chk]:checked");
+        var check = $("[name=btn-chk]:checked");
         var ckVa = check.val()
 
-
         if (ckVa == null){
-            alert("항목을 선택해라")
+            alert("항목을 선택하시오")
         }else{
-
-
              $('#regForm').attr('action' , "{% url 'saveOrder' %}")
              $('#regForm').submit() ;
          }
    })
 
-
-
     <!--	주문내역 삭제	 -->
     $('#delBtn2').click(function(){
-        var $obj = $("input[class='btn-chk']")
-
+        var $obj = $("input[name='btn-chk']")
+        var check = $("[name=btn-chk]:checked");
+        var ckVa = check.val()
         var checkCount = $obj.length
 
         for (var i=0; i<checkCount; i++){
             if($obj.eq(i).is(":checked")){
-                sum = 0
+                amount_a = removeComma($('#mPrice_'+ckVa).text())*parseInt($('#pValueInput_'+ckVa).val())
+                console.log(amount_a)
+                sum-= amount_a
+                console.log(sum)
                 $('#amount').text(sum)
-
                 $obj.eq(i).parent().parent().remove();
-                   }
+                }
             }
         })
-
 	})
 
 </script>
+{% include 'footer.html' %}

@@ -104,7 +104,7 @@ class OrderDetail(models.Model):
         unique_together =(('orderno','menuid'))
 
     def __str__(self):
-        return str(self.orderno) + ' , ' + str(self.menuid) + ' , ' + str(self.price)+ ' , ' + str(self.qty)
+        return str(self.orderno) + ' , ' + str(self.menuid) + ' , ' + str(self.price)+ ' , ' + str(self.qty)+' , ' + str(self.sales)
 
 
 #----------------------< User >----------------------#

@@ -1,8 +1,7 @@
+
 <!DOCTYPE html>
 {% load static%}
-
 <html lang="en">
-
 <head>
 
   <meta charset="utf-8">
@@ -31,52 +30,54 @@
     <span class="site-heading-upper text-primary mb-3">The Best Coffee Shop in MultiCampus</span>
     <span class="site-heading-lower">MAPLE CAFE</span>
   </h1>
-
+<!--------------- MAPLE : 공통  END --------------->
+<!-------------------- 회원가입 영역 : START ---------------------->
   <section class="page-section clearfix">
-    <div class="container">
-      <div class="intro">
-        <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'img/intro.jpg'%}" alt="">
-        <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-          <h2 class="section-heading mb-4">
+  <div class="container">
+    <div class="intro">
+      <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'img/intro.jpg'%}" alt="">
+      <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+        <h2 class="section-heading mb-4">
 
 
-          <form id="loginFrm" method="POST">
-            {%csrf_token%}
+          <form id="registerFrm" method="POST">
+            {% csrf_token %}
             <div class="form-group has-feedback">
-              <!-- username이라는 변수로 ID 값 받기 -->
-              <input type="text" name="username" class="form-control" placeholder="User ID"/>
+            아이디
+              <!-- new_id라는 변수로 신규 ID 값 입력  -->
+              <input type="text" name="new_id" class="form-control" placeholder="Input your ID"/>
             </div>
             <div class="form-group has-feedback">
-              <!-- password라는 변수로 password 값 받기 -->
-              <input type="password" name="password" class="form-control" placeholder="Password"/>
+            비밀번호
+              <!-- new_pwd라는 변수로 신규 ID 값 입력  -->
+              <input type="password" name="new_pwd" class="form-control" placeholder="Input your Password"/>
+            </div>
+            <div class="form-group has-feedback">
+            이메일
+              <!-- new_mail이라는 변수로 신규 ID 값 입력  -->
+              <input type="text" name="new_mail" class="form-control" placeholder="Input your E-mail"/>
+            </div>
+              <input class="btn btn-primary" id="registerBtn" value="Sign up!">
+            <div class="row">
             </div>
           </form>
           </h2>
-          <div class="intro-button mx-auto" align="center">
-            <a class="btn btn-primary btn-xl" id="loginBtn">로그인</a>
-
-          <div class="intro-button mx-auto" align="right">
-            <a class="btn btn-primary btn-xl" href="../registerForm" >회원가입</a>
-          </div>
-          </div>
+<!-------------------- 회원가입 영역 : END ---------------------->
         </div>
       </div>
     </div>
   </section>
-
-<!--------------- MAPLE : 공통  START --------------->
 <!-- *************************** MAPLE : 공통 (FOOTER) START  ******************  -->
 {% include 'footer.html' %}
 <!-- *************************** MAPLE : 공통 (FOOTER) END  ******************  -->
 <!-- ***********버튼 동작에 따른 데이터 submit 영역 START *********** -->
   <script>
     $(document).ready(function() {
-      $("#loginBtn").click(function() {
-        $("#loginFrm").attr('action' , '{% url 'login' %}').submit()
+      $("#registerBtn").click(function() {
+        $("#registerFrm").attr('action' , '{% url 'register' %}').submit()
       })
     })
   </script>
 <!-- ***********버튼 동작에 따른 데이터 submit 영역 END *********** -->
 </body>
 </html>
-<!--------------- MAPLE : 공통  END --------------->

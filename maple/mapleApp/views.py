@@ -55,13 +55,18 @@ def saveOrder(request) :
     mID = request.POST.getlist('hmid[]')
     mPrice = request.POST.getlist('hprice[]')
     mQty = request.POST.getlist('hqty[]')
+    mAmount = request.POST.getlist('hsum[]')
+
     mPay = request.POST.get('payment')
     mStat = request.POST.get('hstat')
-    # print('mID ', mID)
-    # print('mPrice ', mPrice)
-    # print('mQty ', mQty)
-    # print('mPay ', mPay )
-    # print('mStat ', mStat)
+
+    print('mID ', mID)
+    print('mPrice ', mPrice)
+    print('mQty ', mQty)
+    print('mAmount',mAmount)
+
+    print('mPay ', mPay )
+    print('mStat ', mStat)
 
     # ---------------------------
     # 1. orderno 채번
@@ -79,7 +84,7 @@ def saveOrder(request) :
     if od:
         a = od[0]['max_orderno']
         new_orderno = 'R' + datetime.strftime(today, '%Y%m%d') + str(int(a[9:]) + 1).zfill(5)
-    print('new_orderno - ', new_orderno)
+    # print('new_orderno - ', new_orderno)
 
     # -------------------------------
     # 2. 날짜분할(orderdate, ordertime)
@@ -100,7 +105,7 @@ def saveOrder(request) :
                 payment=mPay,
                 status = mStat)
     ord.save()
-    # print(ord)
+    print(ord)
 
     # -------------------------------
     # 4. OrderDetail 테이블 저장
@@ -111,20 +116,60 @@ def saveOrder(request) :
         menu = Menu.objects.get(menuid=mID[i])
         menuList.append(menu)
     # print('menuList-----',menuList)
+    print('----',mAmount[-1])
 
-    ordd = OrderDetail(
-        orderno = ord,
-        menuid = menuList[i],
-        price = mPrice[i],
-        qty = mQty[i],
-    )
-    ordd.save()
+    for i in range(len(mID)):
+        ordd = OrderDetail(
+            orderno = ord,
+            menuid = menuList[i],
+            price = mPrice[i],
+            qty = mQty[i],
+            sales = mAmount[-1],
+        )
+        ordd.save()
+        print(ordd)
     # ---------------------------------
     return redirect('order')
 
 
 #----------------------< 심영석 >----------------------#
-
+# ----------------------< 회원가입 페이지 START >-------------------- #
+def registerForm(request):
+    return render(request, 'registerForm.html')
+# ----------------------< 회원가입 페이지 END >---------------------- #
+# ----------------------< 회원등록 기능 START >-------------------- #
+def register(request):
+    if request.method == 'POST' :
+        # s_registerForm에서 넘어온 값들을 새로운 변수에 담고
+        id = request.POST['new_id']
+        pwd = request.POST['new_pwd']
+        mail = request.POST['new_mail']
+        # register에 User 클래스를 이용해서 각 객체에 담아서
+        register = User(user_id=id, user_pwd=pwd, user_mail=mail)
+        # 저장
+        register.save()
+    return render(request, 'index.html')
+# ----------------------< 회원등록 기능 END >-------------------- #
+# ----------------------< 로그인 기능 START >-------------------- #
+def login(request):
+    if request.method =='POST':
+        id = request.POST['username']
+        pwd = request.POST['password']
+        user = User.objects.get(user_id = id, user_pwd = pwd)
+        if user is not None :
+            return redirect('order')  # 로그인 후 주문 페이지로 분기
+        else :
+            return render(request, 'index.html', {'error' : 'username or password is incorrect.'})
+    else:
+        return render(request, 'index.html')
+# ----------------------< 로그인 기능 END >-------------------- #
+# ----------------------< 로그아웃 기능 START >-------------------- #
+def logout(request):
+    request.session['user_name'] = {}
+    request.session['user_id'] = {}
+    request.session.modified = True
+    return redirect('index')
+# ----------------------< 로그아웃 기능 END >-------------------- #
 #----------------------< 박우환 >----------------------#
 
 
