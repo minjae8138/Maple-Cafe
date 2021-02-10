@@ -1,27 +1,3 @@
-menu.html
-m
-d
-
-녕
-
-유형
-HTML
-크기
-13KB (13,235바이트)
-사용된 저장용량
-13KB (13,235바이트)
-위치
-김민재
-소유자
-나
-수정한 날짜
-내가 2021. 2. 7.에 수정함
-열어본 날짜
-내가 오후 5:23에 열어봄
-생성한 날짜
-Google Drive Web(으)로 2021. 2. 8.에 작성됨
-설명 추가
-뷰어가 다운로드할 수 있음
 <!-- *************************** MAPLE : 공통 (HEADER) START  ******************  -->
 
 <!DOCTYPE html>
@@ -331,7 +307,7 @@ Google Drive Web(으)로 2021. 2. 8.에 작성됨
                  $('#menuName').val( $('#mName_'+ckVal).text()  ) ;
                  $('#menuPrice').val( $('#mPrice_'+ckVal).text()  );
 
-                 $('#menu').val( $('#menuId').text()  );
+                 //$('#menu').val( $('#menuId').text()  );
                  // 업데이트 구분을 Y로 변경 "id
                  $('#updateYn').val( "Y" );
 
@@ -370,7 +346,7 @@ Google Drive Web(으)로 2021. 2. 8.에 작성됨
              if (ckVal == null){
                  alert('! 삭제할 항목을 선택해 주세요.  ')
              }else{
-                 $('#menuId').val( $('#menuId').text()  );
+                 $('#menuId').val( $('#mId_'+ckVal).text() );
                  $('#regForm').attr('action' , "{% url 'deletemenu' %}")
                  $('#regForm').submit() ;
 

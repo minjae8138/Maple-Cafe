@@ -1,6 +1,3 @@
-
-
-
 from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
@@ -46,12 +43,26 @@ def order(request):
     menus = Menu.objects.all()
     # print('menus', menus)
     context = {'menus': menus}
-    print('-------------------------------------')
+    # print('-------------------------------------')
 
     return render(request, 'order.html', context)
 
 
 def saveOrder(request) :
+    # ---------------------------
+    # 0. 브라우저에서 넘어오는 데이터 확인
+    # ---------------------------
+    mID = request.POST.getlist('hmid[]')
+    mPrice = request.POST.getlist('hprice[]')
+    mQty = request.POST.getlist('hqty[]')
+    mPay = request.POST.get('payment')
+    mStat = request.POST.get('hstat')
+    # print('mID ', mID)
+    # print('mPrice ', mPrice)
+    # print('mQty ', mQty)
+    # print('mPay ', mPay )
+    # print('mStat ', mStat)
+
     # ---------------------------
     # 1. orderno 채번
     # ---------------------------
@@ -83,39 +94,31 @@ def saveOrder(request) :
     # -------------------------------
     # 3. Order 테이블 저장
     # -------------------------------
-    mID = request.POST.getlist('hmid[]')
-    mPrice = request.POST.getlist('hprice[]')
-    mQty = request.POST.getlist('hqty[]')
-    print('mID ', mID)
-    print('mPrice ', mPrice)
-    print('mQty ', mQty)
-    print('-------------------------')
-
-
-    # mDate = request.POST.get('hdate')
-    # mTime = request.POST.get('htime')
-    mPay = request.POST.get('hpay')
-    mStat = request.POST.get('hstat')
-    ord = Order(orderno=new_orderno, orderdate=mDate, ordertime=mTime, payment=mPay,
-                               status = mStat)
+    ord = Order(orderno=new_orderno,
+                orderdate=mDate,
+                ordertime=mTime,
+                payment=mPay,
+                status = mStat)
     ord.save()
-    print(ord)
+    # print(ord)
 
     # -------------------------------
     # 4. OrderDetail 테이블 저장
     # -------------------------------
+    # menuid는 menu테이블의 PK이기 때문에 아래와 같이 menuid를 menu테이블로부터 참조해서 가져와서 더 리스트에 담는 작업을 해야함
+    menuList = []
     for i in range(len(mID)) :
         menu = Menu.objects.get(menuid=mID[i])
-        # print('menu',menu)
+        menuList.append(menu)
+    # print('menuList-----',menuList)
 
-    for i in range(len(mID)) :
-        ordd = OrderDetail(
-            orderno = ord,
-            menuid = menu,
-            price = mPrice[i],
-            qty = mQty[i],
-        )
-        ordd.save()
+    ordd = OrderDetail(
+        orderno = ord,
+        menuid = menuList[i],
+        price = mPrice[i],
+        qty = mQty[i],
+    )
+    ordd.save()
     # ---------------------------------
     return redirect('order')
 
@@ -268,7 +271,6 @@ def deleteProduct(request):
     SampleProduct.objects.get(id=pID).delete()
     #화면이동
     return redirect('serchProduct')
-
 
 
 

@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 {% load static%}
+{% load humanize %}
 
 <html lang="en">
 
@@ -32,6 +33,43 @@
             width : 600px;
             text-align : center ;
         }
+        #list-body{
+            width : 600px;
+            background-color : green;
+            height : 10px;
+        }
+<!--        .img-fluid rounded about-heading-img mb-3 mb-lg-0{-->
+<!--            position: absolute ;-->
+<!--            top : 50%;-->
+<!--        }-->
+<!--        .container{-->
+<!--            margin : 0;-->
+<!--            -->
+<!--        }-->
+<!--        .about-heading-content{-->
+<!--            width : 1500px;-->
+<!--        }-->
+<!--        .bg-faded rounded p-5{-->
+<!--            width : 1000px;-->
+<!--        }-->
+<!--        .col-xl-9 col-lg-10 mx-auto{-->
+<!--            margin: 0;-->
+<!--        }-->
+
+        #hname{
+            width : 100%;
+        }
+        #hprice{
+            width : 100%;
+        }
+        #hqty{
+            width: 100%;
+        }
+        #hamount{
+            width : 100%;
+        }
+
+
     </style>
 
 </head>
@@ -86,7 +124,7 @@
 
   <section class="page-section about-heading">
     <div class="container">
-      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">
+<!--      <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">-->
       <div class="about-heading-content">
         <div class="row">
           <div class="col-xl-9 col-lg-10 mx-auto">
@@ -146,7 +184,7 @@
                           <td> <input  type="radio" name="radioValue" value="{{menu.menuid}}"> </td>
                           <td id="mId_{{menu.menuid}}" >{{menu.menuid}}</td>
                           <td id="mName_{{menu.menuid}}" >{{menu.menuname}}</td>
-                          <td id="mPrice_{{menu.menuid}}">{{menu.price}}</td>
+                          <td id="mPrice_{{menu.menuid}}">{{menu.price | intcomma }}</td>
                           <td class="pValue" id="pValue_{{menu.menuid}}">
 
                               <input class="pValueInput" id="pValueInput_{{menu.menuid}}" type="text"  placeholder="" />
@@ -219,15 +257,10 @@
                                         <th>가격</th>
                                         <th>수량</th>
                                         <th>금액</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody id="list-body">
-                                    <tr >
-                                        <input type="hidden" name="menuId" id="menuId" value="3"  >
-                                        <input type="hidden" name="orderNo" id="orderNo"  value="5">
-                                    </tr>
+
                                 </tbody>
                             </table>
                             <br>
@@ -236,9 +269,12 @@
                                 <span>합계</span>
                                 <span id="amount">0</span>
                             </div>
-                            <div onload="time()">
-                              <span id="now"></span>
-                            </div>
+
+                            <select name="payment" id="payment" >
+                                <option value="">--결제방법--</option>
+                                <option value="card">card</option>
+                                <option value="cash">cash</option>
+                            </select>
                           </div>
 
 
@@ -265,7 +301,7 @@
 <!--                <button type="submit" class="btn btn-primary" id="modiBtn3">수정</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="delBtn3">삭제</button>-->
 <!--                <button type="submit" class="btn btn-primary" id="serchBtn3">조회</button>-->
-                <button type="submit" class="btn btn-primary" id="modiBtn2">수정</button>
+
                 <button type="submit" class="btn btn-primary" id="delBtn2">삭제</button>
                 <button type="submit" class="btn btn-primary" id="saveBtn3">저장</button>
               </div>
@@ -305,14 +341,8 @@
 
 
 <script>
-    //---------------------시간---------------------
-    function time(){
-      var time= new Date();
-      document.getElementById("now").innerHTML=time.getFullYear()+"-"+time.getMonth()+"-"+time.getDate()+" "+time.getHours()+":"+time.getMinutes()+":00";
 
-      setInterval("time()",1000);
-    }
-    time();
+
 
 	$(document).ready(function(){
 
@@ -326,7 +356,9 @@
                 alert("항목을 선택해라")
             }else{
 
+                //var tr = $('<tr></tr>')
                 var tr = $('<tr></tr>')
+
                 var input = $('<input/>')
                 input.attr('type', 'checkbox')
 
@@ -338,86 +370,72 @@
 
                 <!--  hidden 추가 (메뉴아이디)               -->
                 var hdMid = $('<input/>')
-
+                hdMid.attr('type', 'hidden')
                 hdMid.attr('name', 'hmid[]')
                 hdMid.attr('value',$('#mId_'+ckVal).text() )
                 tr.append(hdMid)
 
-                <!--  hidden 추가 (메뉴이름)               -->
-                var hdName = $('<input/>')
 
+                <!--         메뉴               -->
+                var hdName = $('<input/>')
+                hdName.attr('id', 'hname')
                 hdName.attr('name', 'hname[]')
                 hdName.attr('value',$('#mName_'+ckVal).text() )
                 tr.append(hdName)
 
-                <!--  hidden 추가 (가격)               -->
+
+                <!--         가격             -->
+                <!--    콤마 제거 후 int 변환하는 함수
+                        // 이게 없으면 콤마형식의 가격과 수량의 연산x, price값이 서버로 안 넘어감(number로 지정됨)  -->
+                function removeComma(str){
+                    n = parseInt(str.replace(/,/g,""));
+                    return n;
+                }
+
                 var hdPrice = $('<input/>')
+                hdPrice.attr('id', 'hprice')
                 hdPrice.attr('name', 'hprice[]')
-                hdPrice.attr('value',$('#mPrice_'+ckVal).text() )
+                hdPrice.attr('value',removeComma($('#mPrice_'+ckVal).text()) )
                 tr.append(hdPrice)
+                console.log(removeComma($('#mPrice_'+ckVal).text()))
+                console.log(typeof(parseInt($('#mPrice_'+ckVal).text())))
 
-                <!--  hidden 추가 (수량)               -->
+
+                <!--          수량            -->
                 var hdQty = $('<input/>')
-
+                hdQty.attr('id', 'hqty')
                 hdQty.attr('name', 'hqty[]')
                 hdQty.attr('value',$('#pValueInput_'+ckVal).val() )
                 tr.append(hdQty)
 
 
-                var td04 = $('<input/>');
-                var amount = parseInt($('#mPrice_'+ckVal).text())*parseInt($('#pValueInput_'+ckVal).val())
-                td04.append(amount);
-                td04.val(td04.text())
-                tr.append(td04);
+                <!--         주문합계          -->
+
+
+                var hdAmount = $('<input/>');
+                hdAmount.attr('id','hamount')
+                var amount = removeComma($('#mPrice_'+ckVal).text())*parseInt($('#pValueInput_'+ckVal).val())
+                hdAmount.append(amount);
+                hdAmount.val(hdAmount.text())
+                tr.append(hdAmount);
                 $('#list-body').append(tr);
 
-                 <!--  hidden 주문번호                -->
-                var hdOrdno = $('<input/>')
-                hdOrdno.attr('type','hidden')
-                hdOrdno.attr('name', 'hordno[]')
-                hdOrdno.attr('value','R2021020900013')
-                tr.append(hdOrdno)
-
-                 <!--  hidden 주문날짜               -->
-                var hdDate = $('<input/>')
-                hdDate.attr('type','hidden')
-                hdDate.attr('name', 'hdate')
-                hdDate.attr('value','2021-02-09')
-                tr.append(hdDate)
-
-                 <!--  hidden 주문시간               -->
-                var hdTime = $('<input/>')
-                hdTime.attr('type','hidden')
-                hdTime.attr('name', 'htime')
-                hdTime.attr('value','16:40:00')
-                tr.append(hdTime)
-
-
-                 <!--  hidden 결제방법                -->
+                 <!--  hidden 결제방법         -->
                 var hdPay = $('<input/>')
                 hdPay.attr('type','hidden')
-                hdPay.attr('name', 'hpay')
-                hdPay.attr('value','card')
+                hdPay.attr('value',$('#payment').val())
+
                 tr.append(hdPay)
 
-                 <!--  hidden 주문상태               -->
+                 <!--  hidden 주문상태         -->
                 var hdStat = $('<input/>')
                 hdStat.attr('type','hidden')
                 hdStat.attr('name', 'hstat')
                 hdStat.attr('value','done')
                 tr.append(hdStat)
 
-
-
-                $('#menuId').val($('#mId_'+ckVal).text());
-
-
-                $('#orderNo').val('M1000000');
-
-
-
+                <!--    합계누적               -->
                 sum += amount
-
                 $('#amount').text(sum)
            }
 
@@ -425,44 +443,28 @@
 
 
 
-         //----------------------------------
-         // 저장
-         //----------------------------------
-        $('#saveBtn3').click(function(){
+     //----------------------------------
+     // 저장
+     //----------------------------------
+    $('#saveBtn3').click(function(){
 
-            var check = $("[class=btn-chk]:checked");
-            var ckVa = check.val()
-
-
-            if (ckVa == null){
-                alert("항목을 선택해라")
-            }else{
+        var check = $("[class=btn-chk]:checked");
+        var ckVa = check.val()
 
 
-                 $('#regForm').attr('action' , "{% url 'saveOrder' %}")
-                 $('#regForm').submit() ;
-             }
-       })
+        if (ckVa == null){
+            alert("항목을 선택해라")
+        }else{
 
-         //----------------------------------
-         // 메뉴삭제
-         //----------------------------------
-<!--	     $('#delBtn2').click(function(){-->
-<!--	         //alert("!삭제버튼") ;-->
-<!--             var checkbox = $("[name=radioValue]:checked");-->
-<!--			 var ckVal= checkbox.val()-->
-<!--             //alert( $('#mName_'+ckVal).text() )-->
 
-<!--             // 선택된 버튼이 없으면 메세지-->
-<!--             if (ckVal == null){-->
-<!--                 alert('! 삭제할 항목을 선택해 주세요.  ')-->
-<!--             }else{-->
-<!--                 $('#mId').val( ckVal  );-->
-<!--                 $('#regForm').attr('action' , "{% url 'deletemenu' %}")-->
-<!--                 $('#regForm').submit() ;-->
+             $('#regForm').attr('action' , "{% url 'saveOrder' %}")
+             $('#regForm').submit() ;
+         }
+   })
 
-<!--             }-->
-<!--		 })-->
+
+
+    <!--	주문내역 삭제	 -->
     $('#delBtn2').click(function(){
         var $obj = $("input[class='btn-chk']")
 
@@ -472,9 +474,6 @@
             if($obj.eq(i).is(":checked")){
                 sum = 0
                 $('#amount').text(sum)
-                console.log($obj.eq(i).children())
-                console.log($obj.eq(i).parent().children())
-                console.log($obj.eq(i))
 
                 $obj.eq(i).parent().parent().remove();
                    }
