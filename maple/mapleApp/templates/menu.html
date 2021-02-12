@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 {% load static%}
-
+{% include 'header.html' %}
 <html lang="en">
 
 <head>
@@ -24,56 +24,6 @@
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/business-casual.min.css'  %}" rel="stylesheet">
-
-</head>
-
-<body>
-  <!--------------- MAPLE : 타이틀  --------------->
-
-  <h1 class="site-heading text-center text-white d-none d-lg-block">
-    <span class="site-heading-upper text-primary mb-3">The Best Coffee Shop in MultiCampus</span>
-    <span class="site-heading-lower">MAPLE CAFE</span>
-  </h1>
-  <!--------------- MAPLE : 메뉴  --------------->
-  <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">MAPLE CAFE</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav mx-auto">
-<!--
-          <li class="nav-item active px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="index.html">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
--->
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="../order">주문</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="../orderStatus">주문현황</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="../menu">카페메뉴</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="../staff">직원관리</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="../salesStatus">매출현황</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-<!-- *************************** MAPLE : 공통 (HEADER) END  ******************  -->
-
-
-
 
 
 <!-- *************************** MAPLE : 화면 START *************************  -->
@@ -254,14 +204,7 @@
 <!-- *************************** MAPLE : 화면 END ***************************  -->
 
 
-
-
-<!-- *************************** MAPLE : 공통 (FOOTER) START  ******************  -->
-  <footer class="footer text-faded text-center py-5">
-    <div class="container">
-      <p class="m-0 small">Copyright &copy; Your Website 2021</p>
-    </div>
-  </footer>
+{% include 'footer.html' %}
 
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
