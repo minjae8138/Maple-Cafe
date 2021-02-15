@@ -44,7 +44,7 @@
             {%csrf_token%}
             <div class="form-group has-feedback">
               <!-- username이라는 변수로 ID 값 받기 -->
-              <input type="text" name="username" class="form-control"  placeholder="User ID"/>
+              <input type="text" name="username" class="form-control" placeholder="User ID"/>
             </div>
             <div class="form-group has-feedback">
               <!-- password라는 변수로 password 값 받기 -->
@@ -52,15 +52,12 @@
             </div>
           </form>
           </h2>
-          <div align="center">
-            <button id="loginBtn" >로그인</button>
-          </div>
+          <div class="intro-button mx-auto" align="center">
+            <a class="btn btn-primary btn-xl" id="loginBtn">로그인</a>
 
-
-          <div class="intro-button mx-auto" align="right">
             <a class="btn btn-primary btn-xl" href="../registerForm" >회원가입</a>
           </div>
-
+          </div>
         </div>
       </div>
     </div>
@@ -73,16 +70,8 @@
 <!-- ***********버튼 동작에 따른 데이터 submit 영역 START *********** -->
   <script>
     $(document).ready(function() {
-      console.log($(".form-control").val() )
       $("#loginBtn").click(function() {
-            console.log($(".form-control").text() )
-        if ($(".form-control").attr('placeholder')  === "User ID"){
-          alert(55)
-        }else{
         $("#loginFrm").attr('action' , '{% url 'login' %}').submit()
-        }
-
-
       })
     })
   </script>
