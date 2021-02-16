@@ -2,6 +2,13 @@
 {% include 'header.html' %}
 {% load static%}
 {% load humanize %}
+<style>
+    tbody{
+        font-weight : bold;
+        font-family: Lora;
+        color : #495057 ;
+    }
+</style>
 
 <!-- *************************** MAPLE : 화면 START *************************  -->
 
@@ -133,7 +140,7 @@
                 <figure class="highcharts-figure">
                     <div id="container"></div>
                     <p class="highcharts-description">
-                        [ 매출그래프 ]
+
                     </p>
                 </figure>
 
@@ -238,7 +245,7 @@
             type: 'column'
         },
         title: {
-            text: ' Mape 매출 '
+            text: ' Maple 매출 '
         },
         subtitle: {
             text: ''
