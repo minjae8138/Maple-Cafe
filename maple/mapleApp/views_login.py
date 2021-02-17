@@ -1,6 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import render , redirect
 from .models import *
+# from django.shortcuts import get_object_or_404
+# from django.contrib.auth.models import User
+from django.contrib import auth
 from django.core.paginator import *
 # ----------------------< 심영석 >---------------------- #
 # ----------------------< 회원가입 페이지 START >-------------------- #
@@ -30,14 +33,16 @@ def login(request):
     if request.method =='POST':
         id = request.POST['username']
         pwd = request.POST['password']
-        user = User.objects.get(user_id = id, user_pwd = pwd)
-        if user is not None :
+        # user = User.objects.get(user_id = id)
+        user = User.objects.get(user_id=id)
+        # user = User.objects.get(user_id = id, user_pwd = pwd)
+        if user.user_pwd == pwd:
             return redirect('order')  # 로그인 후 주문 페이지로 분기
         else :
-            return render(request, 'index.html', {'error' : 'username or password is incorrect.'})
+            # return render(request, 'index.html', {'error' : 'username or password is incorrect.'})
+            return redirect('staff.html')
     else:
         return render(request, 'index.html')
-
 #-----------------------------------
 # 로그아웃
 #-----------------------------------

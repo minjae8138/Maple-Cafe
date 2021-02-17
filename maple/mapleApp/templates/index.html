@@ -70,9 +70,25 @@
 <!-- ***********버튼 동작에 따른 데이터 submit 영역 START *********** -->
   <script>
     $(document).ready(function() {
-      $("#loginBtn").click(function() {
-        $("#loginFrm").attr('action' , '{% url 'login' %}').submit()
-      })
+       $('#loginBtn').on('click',function(event){
+
+       var formData = $('#loginForm').serialize();
+       $.ajax({
+           cache : false,
+           url : "{% url 'login:loginCheck' %}" ,
+           type : 'POST',
+           data : formData,
+           success : function(data){
+               var uid = data['uid'];
+               var upass = data['upass'];
+               console.log("id: "+uid+"pass : "+upass);
+           },
+           error : function(xhr,status,)
+           {
+               alert("실패");
+           },
+       });
+   });
     })
   </script>
 <!-- ***********버튼 동작에 따른 데이터 submit 영역 END *********** -->
