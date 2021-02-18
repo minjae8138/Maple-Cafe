@@ -39,15 +39,16 @@ INSERT INTO m_Info(type,code,name) values ('job_title','J60','아르바이트');
 
 
 /*메뉴 data  */
-INSERT INTO m_menu(menuid,menuname,price) values ('M000001','프라푸치노(Frappuccino)',6100);
+INSERT INTO m_menu(menuid,menuname,price) values ('M000001','콜드브루(Cold Brew)',4500);
 INSERT INTO m_menu(menuid,menuname,price) values ('M000002','아이스티(Iced Tea)',5200);
-INSERT INTO m_menu(menuid,menuname,price) values ('M000003','카페모카(Caffe Moca)',5500);
+INSERT INTO m_menu(menuid,menuname,price) values ('M000003','카페모카(Caffe Mocha)',5500);
 INSERT INTO m_menu(menuid,menuname,price) values ('M000004','오렌지비앙코(Orange Bianco)',6100);
 INSERT INTO m_menu(menuid,menuname,price) values ('M000005','아메리카노(Americano)',4100);
 INSERT INTO m_menu(menuid,menuname,price) values ('M000006','카푸치노(Cappuccino)',4600);
 INSERT INTO m_menu(menuid,menuname,price) values ('M000007','카라멜 마키아또(Caramel Macchiato)',5600);
-INSERT INTO m_menu(menuid,menuname,price) values ('M000008','에스프레소(Espresso)',3600);
-INSERT INTO m_menu(menuid,menuname,price) values ('M000009','콜드브루(Cold Brew)',4500);
+INSERT INTO m_menu(menuid,menuname,price) values ('M000008','프라푸치노(Frappuccino)',6100);
+INSERT INTO m_menu(menuid,menuname,price) values ('M000009','에스프레소(Espresso)',3600);
+
 
 /*직원  데이터 */
 INSERT INTO m_staff(staffid,staffname,jobtitle,startdate,phone) values ('S000001', 'Anthony','J10','2010-01-01','010-4567-1245');
