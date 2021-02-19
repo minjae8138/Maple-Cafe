@@ -43,8 +43,10 @@
                         <div class="input-group-prepend mr-5 ">
                           <label class="input-group-text" for="inputGroupSelect01">선택</label>
                           <select class="custom-select" id="report" name="report" >
-                            <option value="r_menu" selected>메뉴별 매출 현황</option>
-                            <option value="r_date"  >일자별 매출 현황</option>
+                            <option value="r_menu"  {% if report == "r_menu"%} selected="selected" {% endif %}>
+                              메뉴별 매출 현황</option>
+                            <option value="r_date"  {% if report == "r_date"%} selected="selected" {% endif %} >
+                              일자별 매출 현황</option>
                           </select>
                         </div>
 
@@ -261,7 +263,7 @@
             enabled: false
         },
         tooltip: {
-            pointFormat: '매출 : <b>{point.y} </b>'
+            pointFormat: '매출 : <b>{point.y:.1f} </b>'
         },
         series: [{
 
@@ -272,7 +274,7 @@
                 rotation: -90,
                 color: '#FFFFFF',
                 align: 'right',
-                format: '{point.y}', // one decimal
+                format: '{point.y:.1f}', // one decimal
                 y: 10, // 10 pixels down from the top
                 style: {
                     fontSize: '13px',

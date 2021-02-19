@@ -46,9 +46,9 @@ thead{
                   <form action="{% url 'order_search' %}" method="GET" >
                     <div class=" align-items-center" style="vertical-align:middle;">
                       <select id="select_type" name="s_type" style="width: 100px;height:32px;" >
-                        <option value="id">주문번호</option>
-                        <option value="content">주문내용</option>
-                        <option value="status">상    황</option>
+                        <option value="id" {% if s_type == 'id'%} selected="selected" {% endif %}>주문번호</option>
+                        <option value="content" {% if s_type == 'content' %} selected="selected" {% endif %}>주문내용</option>
+                        <option value="status" {% if s_type == 'status' %} selected="selected" {% endif %}>상    황</option>
                       </select>
                       &nbsp;
                       <span id="select_option">
@@ -187,7 +187,7 @@ thead{
         }
       })
 
-     <!-- ysc 20210115 주문상태 변경 : 완료   -->
+    //  ysc 20210115 주문상태 변경 : 완료
      $('#statusBtn').click(function(){
          $('#regForm').attr('action' , "{% url 'change_status' %}")
          $('#regForm').submit() ;
